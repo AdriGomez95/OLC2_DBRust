@@ -23,6 +23,10 @@ reservadas = {
     'int': 'INTT',
     'i64': 'INT',
     'f64': 'FLOAT',
+    '&str': 'STR1',
+    'String': 'STR2',
+    'bool': 'BOOLEA',
+    'char': 'CHAR',
 
     #para operaciones
     'true': 'TRUE',
@@ -199,13 +203,13 @@ def p_instruccion(t):
                    | variables
                    | declaracion """
     t[0] = t[1]
-
+#borrar esto------------------------------------------------------------------------
 def p_declaracion(t):
     """declaracion : INTT ID  IGUAL expression  PTCOMA
                     | INTT ID PTCOMA"""
     t[0] = Declaracion(Identificador(t[2]), t[4] , TIPO_DATO.ENTERO)
 
-
+#fin borrar------------------------------------------------------------------------
 
 
 
@@ -218,26 +222,39 @@ def p_variables(t):
 		         | LET MUT ID IGUAL expression PTCOMA
 		         | LET ID IGUAL expression PTCOMA
 		         | ID IGUAL expression PTCOMA"""
+    #variables inmutables
     if t[3] == ':':
-        t[0] = Declaracion(Identificador(t[2]), t[6] , t[4])
+        t[0] = Declaracion(Identificador(t[2]), t[6] , t[4], "false")
     elif t[3] == '=':
-        t[0] = Declaracion(Identificador(t[2]), t[4] , TIPO_DATO.ENTERO)
+        t[0] = Declaracion(Identificador(t[2]), t[4] , TIPO_DATO.ENTERO, "false")
     else:
+        #variables mutables
         if t[4] == ':':
-            t[0] = Declaracion(Identificador(t[3]), t[7] , t[5])
+            t[0] = Declaracion(Identificador(t[3]), t[7] , t[5], "true")
         elif t[4] == '=':
-            t[0] = Declaracion(Identificador(t[3]), t[5] , TIPO_DATO.ENTERO)
+            t[0] = Declaracion(Identificador(t[3]), t[5] , TIPO_DATO.ENTERO, "true")
         #else: #t[2]=='=' es una asignacion
 
 
 def p_tipo(t):
     """tipo : INT
-	        | FLOAT"""
+	        | FLOAT
+	        | STR1
+	        | STR2
+	        | BOOLEA
+	        | CHAR"""
     if t.slice[1].type == 'INT':
         t[0] = TIPO_DATO.ENTERO
     elif t.slice[1].type == 'FLOAT':
         t[0] = TIPO_DATO.DECIMAL
-
+    elif t.slice[1].type == 'STR1':
+        t[0] = TIPO_DATO.CADENA
+    elif t.slice[1].type == 'STR2':
+        t[0] = TIPO_DATO.CADENA
+    elif t.slice[1].type == 'BOOLEA':
+        t[0] = TIPO_DATO.BOOLEAN
+    elif t.slice[1].type == 'CHAR':
+        t[0] = TIPO_DATO.CHAR
 
 
 
@@ -351,7 +368,7 @@ def p_expression_primitiva(t):
 
 
 def p_error(t):
-    print(f'Se encontro un error sintactico{t.value[0]}')
+    print(f'Se encontro un error sintactico: {t.value[0]}')
 
 
 

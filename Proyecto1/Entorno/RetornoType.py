@@ -7,7 +7,9 @@ class TIPO_DATO(IntEnum):
     CADENA = 2,
     BOOLEAN = 3,
     VOID = 4,
-    NULL = 5
+    NULL = 5,
+    CADENA2 = 6,
+    CHAR = 7
 
 
 class RetornoType:
