@@ -1,4 +1,5 @@
 
+import re
 from idlelib.multicall import r
 
 import ply.yacc as yacc
@@ -23,8 +24,8 @@ reservadas = {
     'int': 'INTT',
     'i64': 'INT',
     'f64': 'FLOAT',
-    '&str': 'STR1',
-    'String': 'STR2',
+    'string': 'STR1',
+    '&str': 'STR2',
     'bool': 'BOOLEA',
     'char': 'CHAR',
 
@@ -139,6 +140,11 @@ def t_CADENA(t):
     t.value = t.value[1:-1]  # Eliminar las comillas dobles
     return  t
 
+def t_CHAR(t):  
+    """\'.*?\'"""
+    t.value = t.value[1:-1]  # Eliminar las comillas dobles
+    return  t
+
 def t_newLine(t):
     r"""\n+"""
     t.lexer.lineno += t.value.count('\n')
@@ -154,7 +160,8 @@ def t_error(t):
 
 
 #CREANDO EL LEXER 
-lexer = lex.lex()
+lexer = lex.lex(reflags=re.IGNORECASE)
+#lexer = lex.lex()
 
 
 
@@ -250,7 +257,7 @@ def p_tipo(t):
     elif t.slice[1].type == 'STR1':
         t[0] = TIPO_DATO.CADENA
     elif t.slice[1].type == 'STR2':
-        t[0] = TIPO_DATO.CADENA
+        t[0] = TIPO_DATO.CADENA2
     elif t.slice[1].type == 'BOOLEA':
         t[0] = TIPO_DATO.BOOLEAN
     elif t.slice[1].type == 'CHAR':
@@ -349,6 +356,7 @@ def p_expression_primitiva(t):
                   | DECIMAL
                   | ID
                   | CADENA
+                  | CHAR
                   | TRUE
                   | FALSE"""
 
@@ -360,6 +368,8 @@ def p_expression_primitiva(t):
         t[0] = Identificador(t[1])
     elif t.slice[1].type == 'CADENA':
         t[0] = Primitivo(t[1], TIPO_DATO.CADENA)
+    elif t.slice[1].type == 'CHAR':
+        t[0] = Primitivo(t[1], TIPO_DATO.CHAR)
     elif t.slice[1].type == 'TRUE':
         t[0] = Primitivo(True, TIPO_DATO.BOOLEAN)
     elif t.slice[1].type == 'FALSE':

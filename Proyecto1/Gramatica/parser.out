@@ -50,15 +50,16 @@ Rule 39    expression -> ENTERO
 Rule 40    expression -> DECIMAL
 Rule 41    expression -> ID
 Rule 42    expression -> CADENA
-Rule 43    expression -> TRUE
-Rule 44    expression -> FALSE
+Rule 43    expression -> CHAR
+Rule 44    expression -> TRUE
+Rule 45    expression -> FALSE
 
 Terminals, with rules where they appear
 
 AND                  : 22
 BOOLEA               : 18
 CADENA               : 42
-CHAR                 : 19
+CHAR                 : 19 43
 COMA                 : 37 38
 CORDER               : 
 CORIZQ               : 
@@ -67,7 +68,7 @@ DIFERENTE            : 28
 DIVISION             : 34
 DOBLEPT              : 9 10 37 37 38 38
 ENTERO               : 39
-FALSE                : 44
+FALSE                : 45
 FLOAT                : 15 38
 ID                   : 7 8 9 10 11 12 13 41
 IGUAL                : 7 9 10 11 12 13
@@ -94,7 +95,7 @@ PRINT                : 20
 PTCOMA               : 7 8 9 10 11 12 13 20
 STR1                 : 16
 STR2                 : 17
-TRUE                 : 43
+TRUE                 : 44
 error                : 
 
 Nonterminals, with rules where they appear
@@ -310,8 +311,9 @@ state 15
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -322,8 +324,9 @@ state 15
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
     expression                     shift and go to state 22
 
@@ -332,8 +335,8 @@ state 16
     (7) declaracion -> INTT ID . IGUAL expression PTCOMA
     (8) declaracion -> INTT ID . PTCOMA
 
-    IGUAL           shift and go to state 33
-    PTCOMA          shift and go to state 34
+    IGUAL           shift and go to state 34
+    PTCOMA          shift and go to state 35
 
 
 state 17
@@ -361,8 +364,9 @@ state 17
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -373,18 +377,19 @@ state 17
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 35
+    expression                     shift and go to state 36
 
 state 18
 
     (9) variables -> LET MUT ID . DOBLEPT tipo IGUAL expression PTCOMA
     (11) variables -> LET MUT ID . IGUAL expression PTCOMA
 
-    DOBLEPT         shift and go to state 36
-    IGUAL           shift and go to state 37
+    DOBLEPT         shift and go to state 37
+    IGUAL           shift and go to state 38
 
 
 state 19
@@ -397,14 +402,14 @@ state 19
     (18) tipo -> . BOOLEA
     (19) tipo -> . CHAR
 
-    INT             shift and go to state 39
-    FLOAT           shift and go to state 40
-    STR1            shift and go to state 41
-    STR2            shift and go to state 42
-    BOOLEA          shift and go to state 43
-    CHAR            shift and go to state 44
+    INT             shift and go to state 40
+    FLOAT           shift and go to state 41
+    STR1            shift and go to state 42
+    STR2            shift and go to state 43
+    BOOLEA          shift and go to state 44
+    CHAR            shift and go to state 45
 
-    tipo                           shift and go to state 38
+    tipo                           shift and go to state 39
 
 state 20
 
@@ -431,8 +436,9 @@ state 20
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -443,10 +449,11 @@ state 20
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 45
+    expression                     shift and go to state 46
 
 state 21
 
@@ -487,20 +494,20 @@ state 22
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PTCOMA          shift and go to state 46
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    PTCOMA          shift and go to state 47
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
 state 23
@@ -528,8 +535,9 @@ state 23
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -540,10 +548,11 @@ state 23
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 60
+    expression                     shift and go to state 61
 
 state 24
 
@@ -570,8 +579,9 @@ state 24
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -582,10 +592,11 @@ state 24
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 61
+    expression                     shift and go to state 62
 
 state 25
 
@@ -612,8 +623,9 @@ state 25
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -624,23 +636,24 @@ state 25
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 62
+    expression                     shift and go to state 63
 
 state 26
 
     (37) expression -> INT . DOBLEPT DOBLEPT POW PIZQ expression COMA expression PDER
 
-    DOBLEPT         shift and go to state 63
+    DOBLEPT         shift and go to state 64
 
 
 state 27
 
     (38) expression -> FLOAT . DOBLEPT DOBLEPT POWF PIZQ expression COMA expression PDER
 
-    DOBLEPT         shift and go to state 64
+    DOBLEPT         shift and go to state 65
 
 
 state 28
@@ -711,49 +724,71 @@ state 30
 
 state 31
 
-    (43) expression -> TRUE .
+    (43) expression -> CHAR .
 
-    PTCOMA          reduce using rule 43 (expression -> TRUE .)
-    OR              reduce using rule 43 (expression -> TRUE .)
-    AND             reduce using rule 43 (expression -> TRUE .)
-    MENOR           reduce using rule 43 (expression -> TRUE .)
-    MAYOR           reduce using rule 43 (expression -> TRUE .)
-    MAYORIGUAL      reduce using rule 43 (expression -> TRUE .)
-    MENORIGUAL      reduce using rule 43 (expression -> TRUE .)
-    DIFERENTE       reduce using rule 43 (expression -> TRUE .)
-    IGUALIGUAL      reduce using rule 43 (expression -> TRUE .)
-    MAS             reduce using rule 43 (expression -> TRUE .)
-    MENOS           reduce using rule 43 (expression -> TRUE .)
-    MULTIPLICACION  reduce using rule 43 (expression -> TRUE .)
-    DIVISION        reduce using rule 43 (expression -> TRUE .)
-    MODULO          reduce using rule 43 (expression -> TRUE .)
-    PDER            reduce using rule 43 (expression -> TRUE .)
-    COMA            reduce using rule 43 (expression -> TRUE .)
+    PTCOMA          reduce using rule 43 (expression -> CHAR .)
+    OR              reduce using rule 43 (expression -> CHAR .)
+    AND             reduce using rule 43 (expression -> CHAR .)
+    MENOR           reduce using rule 43 (expression -> CHAR .)
+    MAYOR           reduce using rule 43 (expression -> CHAR .)
+    MAYORIGUAL      reduce using rule 43 (expression -> CHAR .)
+    MENORIGUAL      reduce using rule 43 (expression -> CHAR .)
+    DIFERENTE       reduce using rule 43 (expression -> CHAR .)
+    IGUALIGUAL      reduce using rule 43 (expression -> CHAR .)
+    MAS             reduce using rule 43 (expression -> CHAR .)
+    MENOS           reduce using rule 43 (expression -> CHAR .)
+    MULTIPLICACION  reduce using rule 43 (expression -> CHAR .)
+    DIVISION        reduce using rule 43 (expression -> CHAR .)
+    MODULO          reduce using rule 43 (expression -> CHAR .)
+    PDER            reduce using rule 43 (expression -> CHAR .)
+    COMA            reduce using rule 43 (expression -> CHAR .)
 
 
 state 32
 
-    (44) expression -> FALSE .
+    (44) expression -> TRUE .
 
-    PTCOMA          reduce using rule 44 (expression -> FALSE .)
-    OR              reduce using rule 44 (expression -> FALSE .)
-    AND             reduce using rule 44 (expression -> FALSE .)
-    MENOR           reduce using rule 44 (expression -> FALSE .)
-    MAYOR           reduce using rule 44 (expression -> FALSE .)
-    MAYORIGUAL      reduce using rule 44 (expression -> FALSE .)
-    MENORIGUAL      reduce using rule 44 (expression -> FALSE .)
-    DIFERENTE       reduce using rule 44 (expression -> FALSE .)
-    IGUALIGUAL      reduce using rule 44 (expression -> FALSE .)
-    MAS             reduce using rule 44 (expression -> FALSE .)
-    MENOS           reduce using rule 44 (expression -> FALSE .)
-    MULTIPLICACION  reduce using rule 44 (expression -> FALSE .)
-    DIVISION        reduce using rule 44 (expression -> FALSE .)
-    MODULO          reduce using rule 44 (expression -> FALSE .)
-    PDER            reduce using rule 44 (expression -> FALSE .)
-    COMA            reduce using rule 44 (expression -> FALSE .)
+    PTCOMA          reduce using rule 44 (expression -> TRUE .)
+    OR              reduce using rule 44 (expression -> TRUE .)
+    AND             reduce using rule 44 (expression -> TRUE .)
+    MENOR           reduce using rule 44 (expression -> TRUE .)
+    MAYOR           reduce using rule 44 (expression -> TRUE .)
+    MAYORIGUAL      reduce using rule 44 (expression -> TRUE .)
+    MENORIGUAL      reduce using rule 44 (expression -> TRUE .)
+    DIFERENTE       reduce using rule 44 (expression -> TRUE .)
+    IGUALIGUAL      reduce using rule 44 (expression -> TRUE .)
+    MAS             reduce using rule 44 (expression -> TRUE .)
+    MENOS           reduce using rule 44 (expression -> TRUE .)
+    MULTIPLICACION  reduce using rule 44 (expression -> TRUE .)
+    DIVISION        reduce using rule 44 (expression -> TRUE .)
+    MODULO          reduce using rule 44 (expression -> TRUE .)
+    PDER            reduce using rule 44 (expression -> TRUE .)
+    COMA            reduce using rule 44 (expression -> TRUE .)
 
 
 state 33
+
+    (45) expression -> FALSE .
+
+    PTCOMA          reduce using rule 45 (expression -> FALSE .)
+    OR              reduce using rule 45 (expression -> FALSE .)
+    AND             reduce using rule 45 (expression -> FALSE .)
+    MENOR           reduce using rule 45 (expression -> FALSE .)
+    MAYOR           reduce using rule 45 (expression -> FALSE .)
+    MAYORIGUAL      reduce using rule 45 (expression -> FALSE .)
+    MENORIGUAL      reduce using rule 45 (expression -> FALSE .)
+    DIFERENTE       reduce using rule 45 (expression -> FALSE .)
+    IGUALIGUAL      reduce using rule 45 (expression -> FALSE .)
+    MAS             reduce using rule 45 (expression -> FALSE .)
+    MENOS           reduce using rule 45 (expression -> FALSE .)
+    MULTIPLICACION  reduce using rule 45 (expression -> FALSE .)
+    DIVISION        reduce using rule 45 (expression -> FALSE .)
+    MODULO          reduce using rule 45 (expression -> FALSE .)
+    PDER            reduce using rule 45 (expression -> FALSE .)
+    COMA            reduce using rule 45 (expression -> FALSE .)
+
+
+state 34
 
     (7) declaracion -> INTT ID IGUAL . expression PTCOMA
     (21) expression -> . expression OR expression
@@ -778,8 +813,9 @@ state 33
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -790,12 +826,13 @@ state 33
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 65
+    expression                     shift and go to state 66
 
-state 34
+state 35
 
     (8) declaracion -> INTT ID PTCOMA .
 
@@ -806,7 +843,7 @@ state 34
     $end            reduce using rule 8 (declaracion -> INTT ID PTCOMA .)
 
 
-state 35
+state 36
 
     (20) print_instruccion -> PRINT NOT PIZQ expression . PDER PTCOMA
     (21) expression -> expression . OR expression
@@ -823,23 +860,23 @@ state 35
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PDER            shift and go to state 66
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    PDER            shift and go to state 67
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
-state 36
+state 37
 
     (9) variables -> LET MUT ID DOBLEPT . tipo IGUAL expression PTCOMA
     (14) tipo -> . INT
@@ -849,16 +886,16 @@ state 36
     (18) tipo -> . BOOLEA
     (19) tipo -> . CHAR
 
-    INT             shift and go to state 39
-    FLOAT           shift and go to state 40
-    STR1            shift and go to state 41
-    STR2            shift and go to state 42
-    BOOLEA          shift and go to state 43
-    CHAR            shift and go to state 44
+    INT             shift and go to state 40
+    FLOAT           shift and go to state 41
+    STR1            shift and go to state 42
+    STR2            shift and go to state 43
+    BOOLEA          shift and go to state 44
+    CHAR            shift and go to state 45
 
-    tipo                           shift and go to state 67
+    tipo                           shift and go to state 68
 
-state 37
+state 38
 
     (11) variables -> LET MUT ID IGUAL . expression PTCOMA
     (21) expression -> . expression OR expression
@@ -883,8 +920,9 @@ state 37
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -895,61 +933,62 @@ state 37
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 68
+    expression                     shift and go to state 69
 
-state 38
+state 39
 
     (10) variables -> LET ID DOBLEPT tipo . IGUAL expression PTCOMA
 
-    IGUAL           shift and go to state 69
+    IGUAL           shift and go to state 70
 
 
-state 39
+state 40
 
     (14) tipo -> INT .
 
     IGUAL           reduce using rule 14 (tipo -> INT .)
 
 
-state 40
+state 41
 
     (15) tipo -> FLOAT .
 
     IGUAL           reduce using rule 15 (tipo -> FLOAT .)
 
 
-state 41
+state 42
 
     (16) tipo -> STR1 .
 
     IGUAL           reduce using rule 16 (tipo -> STR1 .)
 
 
-state 42
+state 43
 
     (17) tipo -> STR2 .
 
     IGUAL           reduce using rule 17 (tipo -> STR2 .)
 
 
-state 43
+state 44
 
     (18) tipo -> BOOLEA .
 
     IGUAL           reduce using rule 18 (tipo -> BOOLEA .)
 
 
-state 44
+state 45
 
     (19) tipo -> CHAR .
 
     IGUAL           reduce using rule 19 (tipo -> CHAR .)
 
 
-state 45
+state 46
 
     (12) variables -> LET ID IGUAL expression . PTCOMA
     (21) expression -> expression . OR expression
@@ -966,23 +1005,23 @@ state 45
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PTCOMA          shift and go to state 70
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    PTCOMA          shift and go to state 71
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
-state 46
+state 47
 
     (13) variables -> ID IGUAL expression PTCOMA .
 
@@ -993,7 +1032,7 @@ state 46
     $end            reduce using rule 13 (variables -> ID IGUAL expression PTCOMA .)
 
 
-state 47
+state 48
 
     (21) expression -> expression OR . expression
     (21) expression -> . expression OR expression
@@ -1018,8 +1057,9 @@ state 47
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1030,12 +1070,13 @@ state 47
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 71
+    expression                     shift and go to state 72
 
-state 48
+state 49
 
     (22) expression -> expression AND . expression
     (21) expression -> . expression OR expression
@@ -1060,8 +1101,9 @@ state 48
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1072,12 +1114,13 @@ state 48
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 72
+    expression                     shift and go to state 73
 
-state 49
+state 50
 
     (24) expression -> expression MENOR . expression
     (21) expression -> . expression OR expression
@@ -1102,8 +1145,9 @@ state 49
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1114,12 +1158,13 @@ state 49
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 73
+    expression                     shift and go to state 74
 
-state 50
+state 51
 
     (25) expression -> expression MAYOR . expression
     (21) expression -> . expression OR expression
@@ -1144,8 +1189,9 @@ state 50
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1156,12 +1202,13 @@ state 50
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 74
+    expression                     shift and go to state 75
 
-state 51
+state 52
 
     (26) expression -> expression MAYORIGUAL . expression
     (21) expression -> . expression OR expression
@@ -1186,8 +1233,9 @@ state 51
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1198,12 +1246,13 @@ state 51
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 75
+    expression                     shift and go to state 76
 
-state 52
+state 53
 
     (27) expression -> expression MENORIGUAL . expression
     (21) expression -> . expression OR expression
@@ -1228,8 +1277,9 @@ state 52
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1240,12 +1290,13 @@ state 52
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 76
+    expression                     shift and go to state 77
 
-state 53
+state 54
 
     (28) expression -> expression DIFERENTE . expression
     (21) expression -> . expression OR expression
@@ -1270,8 +1321,9 @@ state 53
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1282,12 +1334,13 @@ state 53
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 77
+    expression                     shift and go to state 78
 
-state 54
+state 55
 
     (29) expression -> expression IGUALIGUAL . expression
     (21) expression -> . expression OR expression
@@ -1312,8 +1365,9 @@ state 54
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1324,12 +1378,13 @@ state 54
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 78
+    expression                     shift and go to state 79
 
-state 55
+state 56
 
     (31) expression -> expression MAS . expression
     (21) expression -> . expression OR expression
@@ -1354,8 +1409,9 @@ state 55
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1366,12 +1422,13 @@ state 55
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 79
+    expression                     shift and go to state 80
 
-state 56
+state 57
 
     (32) expression -> expression MENOS . expression
     (21) expression -> . expression OR expression
@@ -1396,8 +1453,9 @@ state 56
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1408,12 +1466,13 @@ state 56
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 80
+    expression                     shift and go to state 81
 
-state 57
+state 58
 
     (33) expression -> expression MULTIPLICACION . expression
     (21) expression -> . expression OR expression
@@ -1438,8 +1497,9 @@ state 57
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1450,12 +1510,13 @@ state 57
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 81
+    expression                     shift and go to state 82
 
-state 58
+state 59
 
     (34) expression -> expression DIVISION . expression
     (21) expression -> . expression OR expression
@@ -1480,8 +1541,9 @@ state 58
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1492,12 +1554,13 @@ state 58
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 82
+    expression                     shift and go to state 83
 
-state 59
+state 60
 
     (36) expression -> expression MODULO . expression
     (21) expression -> . expression OR expression
@@ -1522,8 +1585,9 @@ state 59
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1534,12 +1598,13 @@ state 59
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 83
+    expression                     shift and go to state 84
 
-state 60
+state 61
 
     (23) expression -> NOT expression .
     (21) expression -> expression . OR expression
@@ -1573,22 +1638,22 @@ state 60
     PDER            reduce using rule 23 (expression -> NOT expression .)
     COMA            reduce using rule 23 (expression -> NOT expression .)
 
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
-  ! MAS             [ shift and go to state 55 ]
-  ! MENOS           [ shift and go to state 56 ]
-  ! MULTIPLICACION  [ shift and go to state 57 ]
-  ! DIVISION        [ shift and go to state 58 ]
-  ! MODULO          [ shift and go to state 59 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
+  ! MAS             [ shift and go to state 56 ]
+  ! MENOS           [ shift and go to state 57 ]
+  ! MULTIPLICACION  [ shift and go to state 58 ]
+  ! DIVISION        [ shift and go to state 59 ]
+  ! MODULO          [ shift and go to state 60 ]
 
 
-state 61
+state 62
 
     (30) expression -> MENOS expression .
     (21) expression -> expression . OR expression
@@ -1622,22 +1687,22 @@ state 61
     PDER            reduce using rule 30 (expression -> MENOS expression .)
     COMA            reduce using rule 30 (expression -> MENOS expression .)
 
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
-  ! MAS             [ shift and go to state 55 ]
-  ! MENOS           [ shift and go to state 56 ]
-  ! MULTIPLICACION  [ shift and go to state 57 ]
-  ! DIVISION        [ shift and go to state 58 ]
-  ! MODULO          [ shift and go to state 59 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
+  ! MAS             [ shift and go to state 56 ]
+  ! MENOS           [ shift and go to state 57 ]
+  ! MULTIPLICACION  [ shift and go to state 58 ]
+  ! DIVISION        [ shift and go to state 59 ]
+  ! MODULO          [ shift and go to state 60 ]
 
 
-state 62
+state 63
 
     (35) expression -> PIZQ expression . PDER
     (21) expression -> expression . OR expression
@@ -1654,37 +1719,37 @@ state 62
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PDER            shift and go to state 84
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
-
-
-state 63
-
-    (37) expression -> INT DOBLEPT . DOBLEPT POW PIZQ expression COMA expression PDER
-
-    DOBLEPT         shift and go to state 85
+    PDER            shift and go to state 85
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
 state 64
 
-    (38) expression -> FLOAT DOBLEPT . DOBLEPT POWF PIZQ expression COMA expression PDER
+    (37) expression -> INT DOBLEPT . DOBLEPT POW PIZQ expression COMA expression PDER
 
     DOBLEPT         shift and go to state 86
 
 
 state 65
+
+    (38) expression -> FLOAT DOBLEPT . DOBLEPT POWF PIZQ expression COMA expression PDER
+
+    DOBLEPT         shift and go to state 87
+
+
+state 66
 
     (7) declaracion -> INTT ID IGUAL expression . PTCOMA
     (21) expression -> expression . OR expression
@@ -1701,37 +1766,37 @@ state 65
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PTCOMA          shift and go to state 87
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
-
-
-state 66
-
-    (20) print_instruccion -> PRINT NOT PIZQ expression PDER . PTCOMA
-
     PTCOMA          shift and go to state 88
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
 state 67
 
-    (9) variables -> LET MUT ID DOBLEPT tipo . IGUAL expression PTCOMA
+    (20) print_instruccion -> PRINT NOT PIZQ expression PDER . PTCOMA
 
-    IGUAL           shift and go to state 89
+    PTCOMA          shift and go to state 89
 
 
 state 68
+
+    (9) variables -> LET MUT ID DOBLEPT tipo . IGUAL expression PTCOMA
+
+    IGUAL           shift and go to state 90
+
+
+state 69
 
     (11) variables -> LET MUT ID IGUAL expression . PTCOMA
     (21) expression -> expression . OR expression
@@ -1748,23 +1813,23 @@ state 68
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PTCOMA          shift and go to state 90
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    PTCOMA          shift and go to state 91
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
-state 69
+state 70
 
     (10) variables -> LET ID DOBLEPT tipo IGUAL . expression PTCOMA
     (21) expression -> . expression OR expression
@@ -1789,8 +1854,9 @@ state 69
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -1801,12 +1867,13 @@ state 69
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 91
+    expression                     shift and go to state 92
 
-state 70
+state 71
 
     (12) variables -> LET ID IGUAL expression PTCOMA .
 
@@ -1817,7 +1884,7 @@ state 70
     $end            reduce using rule 12 (variables -> LET ID IGUAL expression PTCOMA .)
 
 
-state 71
+state 72
 
     (21) expression -> expression OR expression .
     (21) expression -> expression . OR expression
@@ -1838,18 +1905,18 @@ state 71
     OR              reduce using rule 21 (expression -> expression OR expression .)
     PDER            reduce using rule 21 (expression -> expression OR expression .)
     COMA            reduce using rule 21 (expression -> expression OR expression .)
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! AND             [ reduce using rule 21 (expression -> expression OR expression .) ]
   ! MENOR           [ reduce using rule 21 (expression -> expression OR expression .) ]
@@ -1863,10 +1930,10 @@ state 71
   ! MULTIPLICACION  [ reduce using rule 21 (expression -> expression OR expression .) ]
   ! DIVISION        [ reduce using rule 21 (expression -> expression OR expression .) ]
   ! MODULO          [ reduce using rule 21 (expression -> expression OR expression .) ]
-  ! OR              [ shift and go to state 47 ]
+  ! OR              [ shift and go to state 48 ]
 
 
-state 72
+state 73
 
     (22) expression -> expression AND expression .
     (21) expression -> expression . OR expression
@@ -1888,17 +1955,17 @@ state 72
     AND             reduce using rule 22 (expression -> expression AND expression .)
     PDER            reduce using rule 22 (expression -> expression AND expression .)
     COMA            reduce using rule 22 (expression -> expression AND expression .)
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MENOR           [ reduce using rule 22 (expression -> expression AND expression .) ]
   ! MAYOR           [ reduce using rule 22 (expression -> expression AND expression .) ]
@@ -1911,11 +1978,11 @@ state 72
   ! MULTIPLICACION  [ reduce using rule 22 (expression -> expression AND expression .) ]
   ! DIVISION        [ reduce using rule 22 (expression -> expression AND expression .) ]
   ! MODULO          [ reduce using rule 22 (expression -> expression AND expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
 
 
-state 73
+state 74
 
     (24) expression -> expression MENOR expression .
     (21) expression -> expression . OR expression
@@ -1943,28 +2010,28 @@ state 73
     IGUALIGUAL      reduce using rule 24 (expression -> expression MENOR expression .)
     PDER            reduce using rule 24 (expression -> expression MENOR expression .)
     COMA            reduce using rule 24 (expression -> expression MENOR expression .)
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MAS             [ reduce using rule 24 (expression -> expression MENOR expression .) ]
   ! MENOS           [ reduce using rule 24 (expression -> expression MENOR expression .) ]
   ! MULTIPLICACION  [ reduce using rule 24 (expression -> expression MENOR expression .) ]
   ! DIVISION        [ reduce using rule 24 (expression -> expression MENOR expression .) ]
   ! MODULO          [ reduce using rule 24 (expression -> expression MENOR expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
 
 
-state 74
+state 75
 
     (25) expression -> expression MAYOR expression .
     (21) expression -> expression . OR expression
@@ -1992,28 +2059,28 @@ state 74
     IGUALIGUAL      reduce using rule 25 (expression -> expression MAYOR expression .)
     PDER            reduce using rule 25 (expression -> expression MAYOR expression .)
     COMA            reduce using rule 25 (expression -> expression MAYOR expression .)
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MAS             [ reduce using rule 25 (expression -> expression MAYOR expression .) ]
   ! MENOS           [ reduce using rule 25 (expression -> expression MAYOR expression .) ]
   ! MULTIPLICACION  [ reduce using rule 25 (expression -> expression MAYOR expression .) ]
   ! DIVISION        [ reduce using rule 25 (expression -> expression MAYOR expression .) ]
   ! MODULO          [ reduce using rule 25 (expression -> expression MAYOR expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
 
 
-state 75
+state 76
 
     (26) expression -> expression MAYORIGUAL expression .
     (21) expression -> expression . OR expression
@@ -2041,28 +2108,28 @@ state 75
     IGUALIGUAL      reduce using rule 26 (expression -> expression MAYORIGUAL expression .)
     PDER            reduce using rule 26 (expression -> expression MAYORIGUAL expression .)
     COMA            reduce using rule 26 (expression -> expression MAYORIGUAL expression .)
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MAS             [ reduce using rule 26 (expression -> expression MAYORIGUAL expression .) ]
   ! MENOS           [ reduce using rule 26 (expression -> expression MAYORIGUAL expression .) ]
   ! MULTIPLICACION  [ reduce using rule 26 (expression -> expression MAYORIGUAL expression .) ]
   ! DIVISION        [ reduce using rule 26 (expression -> expression MAYORIGUAL expression .) ]
   ! MODULO          [ reduce using rule 26 (expression -> expression MAYORIGUAL expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
 
 
-state 76
+state 77
 
     (27) expression -> expression MENORIGUAL expression .
     (21) expression -> expression . OR expression
@@ -2090,28 +2157,28 @@ state 76
     IGUALIGUAL      reduce using rule 27 (expression -> expression MENORIGUAL expression .)
     PDER            reduce using rule 27 (expression -> expression MENORIGUAL expression .)
     COMA            reduce using rule 27 (expression -> expression MENORIGUAL expression .)
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MAS             [ reduce using rule 27 (expression -> expression MENORIGUAL expression .) ]
   ! MENOS           [ reduce using rule 27 (expression -> expression MENORIGUAL expression .) ]
   ! MULTIPLICACION  [ reduce using rule 27 (expression -> expression MENORIGUAL expression .) ]
   ! DIVISION        [ reduce using rule 27 (expression -> expression MENORIGUAL expression .) ]
   ! MODULO          [ reduce using rule 27 (expression -> expression MENORIGUAL expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
 
 
-state 77
+state 78
 
     (28) expression -> expression DIFERENTE expression .
     (21) expression -> expression . OR expression
@@ -2139,28 +2206,28 @@ state 77
     IGUALIGUAL      reduce using rule 28 (expression -> expression DIFERENTE expression .)
     PDER            reduce using rule 28 (expression -> expression DIFERENTE expression .)
     COMA            reduce using rule 28 (expression -> expression DIFERENTE expression .)
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MAS             [ reduce using rule 28 (expression -> expression DIFERENTE expression .) ]
   ! MENOS           [ reduce using rule 28 (expression -> expression DIFERENTE expression .) ]
   ! MULTIPLICACION  [ reduce using rule 28 (expression -> expression DIFERENTE expression .) ]
   ! DIVISION        [ reduce using rule 28 (expression -> expression DIFERENTE expression .) ]
   ! MODULO          [ reduce using rule 28 (expression -> expression DIFERENTE expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
 
 
-state 78
+state 79
 
     (29) expression -> expression IGUALIGUAL expression .
     (21) expression -> expression . OR expression
@@ -2188,28 +2255,28 @@ state 78
     IGUALIGUAL      reduce using rule 29 (expression -> expression IGUALIGUAL expression .)
     PDER            reduce using rule 29 (expression -> expression IGUALIGUAL expression .)
     COMA            reduce using rule 29 (expression -> expression IGUALIGUAL expression .)
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MAS             [ reduce using rule 29 (expression -> expression IGUALIGUAL expression .) ]
   ! MENOS           [ reduce using rule 29 (expression -> expression IGUALIGUAL expression .) ]
   ! MULTIPLICACION  [ reduce using rule 29 (expression -> expression IGUALIGUAL expression .) ]
   ! DIVISION        [ reduce using rule 29 (expression -> expression IGUALIGUAL expression .) ]
   ! MODULO          [ reduce using rule 29 (expression -> expression IGUALIGUAL expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
 
 
-state 79
+state 80
 
     (31) expression -> expression MAS expression .
     (21) expression -> expression . OR expression
@@ -2239,26 +2306,26 @@ state 79
     MENOS           reduce using rule 31 (expression -> expression MAS expression .)
     PDER            reduce using rule 31 (expression -> expression MAS expression .)
     COMA            reduce using rule 31 (expression -> expression MAS expression .)
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MULTIPLICACION  [ reduce using rule 31 (expression -> expression MAS expression .) ]
   ! DIVISION        [ reduce using rule 31 (expression -> expression MAS expression .) ]
   ! MODULO          [ reduce using rule 31 (expression -> expression MAS expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
-  ! MAS             [ shift and go to state 55 ]
-  ! MENOS           [ shift and go to state 56 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
+  ! MAS             [ shift and go to state 56 ]
+  ! MENOS           [ shift and go to state 57 ]
 
 
-state 80
+state 81
 
     (32) expression -> expression MENOS expression .
     (21) expression -> expression . OR expression
@@ -2288,26 +2355,26 @@ state 80
     MENOS           reduce using rule 32 (expression -> expression MENOS expression .)
     PDER            reduce using rule 32 (expression -> expression MENOS expression .)
     COMA            reduce using rule 32 (expression -> expression MENOS expression .)
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MULTIPLICACION  [ reduce using rule 32 (expression -> expression MENOS expression .) ]
   ! DIVISION        [ reduce using rule 32 (expression -> expression MENOS expression .) ]
   ! MODULO          [ reduce using rule 32 (expression -> expression MENOS expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
-  ! MAS             [ shift and go to state 55 ]
-  ! MENOS           [ shift and go to state 56 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
+  ! MAS             [ shift and go to state 56 ]
+  ! MENOS           [ shift and go to state 57 ]
 
 
-state 81
+state 82
 
     (33) expression -> expression MULTIPLICACION expression .
     (21) expression -> expression . OR expression
@@ -2339,24 +2406,24 @@ state 81
     DIVISION        reduce using rule 33 (expression -> expression MULTIPLICACION expression .)
     PDER            reduce using rule 33 (expression -> expression MULTIPLICACION expression .)
     COMA            reduce using rule 33 (expression -> expression MULTIPLICACION expression .)
-    MODULO          shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MODULO          [ reduce using rule 33 (expression -> expression MULTIPLICACION expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
-  ! MAS             [ shift and go to state 55 ]
-  ! MENOS           [ shift and go to state 56 ]
-  ! MULTIPLICACION  [ shift and go to state 57 ]
-  ! DIVISION        [ shift and go to state 58 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
+  ! MAS             [ shift and go to state 56 ]
+  ! MENOS           [ shift and go to state 57 ]
+  ! MULTIPLICACION  [ shift and go to state 58 ]
+  ! DIVISION        [ shift and go to state 59 ]
 
 
-state 82
+state 83
 
     (34) expression -> expression DIVISION expression .
     (21) expression -> expression . OR expression
@@ -2388,24 +2455,24 @@ state 82
     DIVISION        reduce using rule 34 (expression -> expression DIVISION expression .)
     PDER            reduce using rule 34 (expression -> expression DIVISION expression .)
     COMA            reduce using rule 34 (expression -> expression DIVISION expression .)
-    MODULO          shift and go to state 59
+    MODULO          shift and go to state 60
 
   ! MODULO          [ reduce using rule 34 (expression -> expression DIVISION expression .) ]
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
-  ! MAS             [ shift and go to state 55 ]
-  ! MENOS           [ shift and go to state 56 ]
-  ! MULTIPLICACION  [ shift and go to state 57 ]
-  ! DIVISION        [ shift and go to state 58 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
+  ! MAS             [ shift and go to state 56 ]
+  ! MENOS           [ shift and go to state 57 ]
+  ! MULTIPLICACION  [ shift and go to state 58 ]
+  ! DIVISION        [ shift and go to state 59 ]
 
 
-state 83
+state 84
 
     (36) expression -> expression MODULO expression .
     (21) expression -> expression . OR expression
@@ -2439,22 +2506,22 @@ state 83
     PDER            reduce using rule 36 (expression -> expression MODULO expression .)
     COMA            reduce using rule 36 (expression -> expression MODULO expression .)
 
-  ! OR              [ shift and go to state 47 ]
-  ! AND             [ shift and go to state 48 ]
-  ! MENOR           [ shift and go to state 49 ]
-  ! MAYOR           [ shift and go to state 50 ]
-  ! MAYORIGUAL      [ shift and go to state 51 ]
-  ! MENORIGUAL      [ shift and go to state 52 ]
-  ! DIFERENTE       [ shift and go to state 53 ]
-  ! IGUALIGUAL      [ shift and go to state 54 ]
-  ! MAS             [ shift and go to state 55 ]
-  ! MENOS           [ shift and go to state 56 ]
-  ! MULTIPLICACION  [ shift and go to state 57 ]
-  ! DIVISION        [ shift and go to state 58 ]
-  ! MODULO          [ shift and go to state 59 ]
+  ! OR              [ shift and go to state 48 ]
+  ! AND             [ shift and go to state 49 ]
+  ! MENOR           [ shift and go to state 50 ]
+  ! MAYOR           [ shift and go to state 51 ]
+  ! MAYORIGUAL      [ shift and go to state 52 ]
+  ! MENORIGUAL      [ shift and go to state 53 ]
+  ! DIFERENTE       [ shift and go to state 54 ]
+  ! IGUALIGUAL      [ shift and go to state 55 ]
+  ! MAS             [ shift and go to state 56 ]
+  ! MENOS           [ shift and go to state 57 ]
+  ! MULTIPLICACION  [ shift and go to state 58 ]
+  ! DIVISION        [ shift and go to state 59 ]
+  ! MODULO          [ shift and go to state 60 ]
 
 
-state 84
+state 85
 
     (35) expression -> PIZQ expression PDER .
 
@@ -2476,21 +2543,21 @@ state 84
     COMA            reduce using rule 35 (expression -> PIZQ expression PDER .)
 
 
-state 85
+state 86
 
     (37) expression -> INT DOBLEPT DOBLEPT . POW PIZQ expression COMA expression PDER
 
-    POW             shift and go to state 92
-
-
-state 86
-
-    (38) expression -> FLOAT DOBLEPT DOBLEPT . POWF PIZQ expression COMA expression PDER
-
-    POWF            shift and go to state 93
+    POW             shift and go to state 93
 
 
 state 87
+
+    (38) expression -> FLOAT DOBLEPT DOBLEPT . POWF PIZQ expression COMA expression PDER
+
+    POWF            shift and go to state 94
+
+
+state 88
 
     (7) declaracion -> INTT ID IGUAL expression PTCOMA .
 
@@ -2501,7 +2568,7 @@ state 87
     $end            reduce using rule 7 (declaracion -> INTT ID IGUAL expression PTCOMA .)
 
 
-state 88
+state 89
 
     (20) print_instruccion -> PRINT NOT PIZQ expression PDER PTCOMA .
 
@@ -2512,7 +2579,7 @@ state 88
     $end            reduce using rule 20 (print_instruccion -> PRINT NOT PIZQ expression PDER PTCOMA .)
 
 
-state 89
+state 90
 
     (9) variables -> LET MUT ID DOBLEPT tipo IGUAL . expression PTCOMA
     (21) expression -> . expression OR expression
@@ -2537,8 +2604,9 @@ state 89
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -2549,12 +2617,13 @@ state 89
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 94
+    expression                     shift and go to state 95
 
-state 90
+state 91
 
     (11) variables -> LET MUT ID IGUAL expression PTCOMA .
 
@@ -2565,7 +2634,7 @@ state 90
     $end            reduce using rule 11 (variables -> LET MUT ID IGUAL expression PTCOMA .)
 
 
-state 91
+state 92
 
     (10) variables -> LET ID DOBLEPT tipo IGUAL expression . PTCOMA
     (21) expression -> expression . OR expression
@@ -2582,37 +2651,37 @@ state 91
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PTCOMA          shift and go to state 95
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
-
-
-state 92
-
-    (37) expression -> INT DOBLEPT DOBLEPT POW . PIZQ expression COMA expression PDER
-
-    PIZQ            shift and go to state 96
+    PTCOMA          shift and go to state 96
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
 state 93
 
-    (38) expression -> FLOAT DOBLEPT DOBLEPT POWF . PIZQ expression COMA expression PDER
+    (37) expression -> INT DOBLEPT DOBLEPT POW . PIZQ expression COMA expression PDER
 
     PIZQ            shift and go to state 97
 
 
 state 94
+
+    (38) expression -> FLOAT DOBLEPT DOBLEPT POWF . PIZQ expression COMA expression PDER
+
+    PIZQ            shift and go to state 98
+
+
+state 95
 
     (9) variables -> LET MUT ID DOBLEPT tipo IGUAL expression . PTCOMA
     (21) expression -> expression . OR expression
@@ -2629,23 +2698,23 @@ state 94
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PTCOMA          shift and go to state 98
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    PTCOMA          shift and go to state 99
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
-state 95
+state 96
 
     (10) variables -> LET ID DOBLEPT tipo IGUAL expression PTCOMA .
 
@@ -2656,7 +2725,7 @@ state 95
     $end            reduce using rule 10 (variables -> LET ID DOBLEPT tipo IGUAL expression PTCOMA .)
 
 
-state 96
+state 97
 
     (37) expression -> INT DOBLEPT DOBLEPT POW PIZQ . expression COMA expression PDER
     (21) expression -> . expression OR expression
@@ -2681,8 +2750,9 @@ state 96
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -2693,12 +2763,13 @@ state 96
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 99
+    expression                     shift and go to state 100
 
-state 97
+state 98
 
     (38) expression -> FLOAT DOBLEPT DOBLEPT POWF PIZQ . expression COMA expression PDER
     (21) expression -> . expression OR expression
@@ -2723,8 +2794,9 @@ state 97
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -2735,12 +2807,13 @@ state 97
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 100
+    expression                     shift and go to state 101
 
-state 98
+state 99
 
     (9) variables -> LET MUT ID DOBLEPT tipo IGUAL expression PTCOMA .
 
@@ -2751,7 +2824,7 @@ state 98
     $end            reduce using rule 9 (variables -> LET MUT ID DOBLEPT tipo IGUAL expression PTCOMA .)
 
 
-state 99
+state 100
 
     (37) expression -> INT DOBLEPT DOBLEPT POW PIZQ expression . COMA expression PDER
     (21) expression -> expression . OR expression
@@ -2768,23 +2841,23 @@ state 99
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    COMA            shift and go to state 101
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    COMA            shift and go to state 102
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
-state 100
+state 101
 
     (38) expression -> FLOAT DOBLEPT DOBLEPT POWF PIZQ expression . COMA expression PDER
     (21) expression -> expression . OR expression
@@ -2801,23 +2874,23 @@ state 100
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    COMA            shift and go to state 102
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    COMA            shift and go to state 103
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
-state 101
+state 102
 
     (37) expression -> INT DOBLEPT DOBLEPT POW PIZQ expression COMA . expression PDER
     (21) expression -> . expression OR expression
@@ -2842,8 +2915,9 @@ state 101
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -2854,12 +2928,13 @@ state 101
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 103
+    expression                     shift and go to state 104
 
-state 102
+state 103
 
     (38) expression -> FLOAT DOBLEPT DOBLEPT POWF PIZQ expression COMA . expression PDER
     (21) expression -> . expression OR expression
@@ -2884,8 +2959,9 @@ state 102
     (40) expression -> . DECIMAL
     (41) expression -> . ID
     (42) expression -> . CADENA
-    (43) expression -> . TRUE
-    (44) expression -> . FALSE
+    (43) expression -> . CHAR
+    (44) expression -> . TRUE
+    (45) expression -> . FALSE
 
     NOT             shift and go to state 23
     MENOS           shift and go to state 24
@@ -2896,12 +2972,13 @@ state 102
     DECIMAL         shift and go to state 29
     ID              shift and go to state 21
     CADENA          shift and go to state 30
-    TRUE            shift and go to state 31
-    FALSE           shift and go to state 32
+    CHAR            shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
 
-    expression                     shift and go to state 104
+    expression                     shift and go to state 105
 
-state 103
+state 104
 
     (37) expression -> INT DOBLEPT DOBLEPT POW PIZQ expression COMA expression . PDER
     (21) expression -> expression . OR expression
@@ -2918,23 +2995,23 @@ state 103
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PDER            shift and go to state 105
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    PDER            shift and go to state 106
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
-state 104
+state 105
 
     (38) expression -> FLOAT DOBLEPT DOBLEPT POWF PIZQ expression COMA expression . PDER
     (21) expression -> expression . OR expression
@@ -2951,23 +3028,23 @@ state 104
     (34) expression -> expression . DIVISION expression
     (36) expression -> expression . MODULO expression
 
-    PDER            shift and go to state 106
-    OR              shift and go to state 47
-    AND             shift and go to state 48
-    MENOR           shift and go to state 49
-    MAYOR           shift and go to state 50
-    MAYORIGUAL      shift and go to state 51
-    MENORIGUAL      shift and go to state 52
-    DIFERENTE       shift and go to state 53
-    IGUALIGUAL      shift and go to state 54
-    MAS             shift and go to state 55
-    MENOS           shift and go to state 56
-    MULTIPLICACION  shift and go to state 57
-    DIVISION        shift and go to state 58
-    MODULO          shift and go to state 59
+    PDER            shift and go to state 107
+    OR              shift and go to state 48
+    AND             shift and go to state 49
+    MENOR           shift and go to state 50
+    MAYOR           shift and go to state 51
+    MAYORIGUAL      shift and go to state 52
+    MENORIGUAL      shift and go to state 53
+    DIFERENTE       shift and go to state 54
+    IGUALIGUAL      shift and go to state 55
+    MAS             shift and go to state 56
+    MENOS           shift and go to state 57
+    MULTIPLICACION  shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
 
 
-state 105
+state 106
 
     (37) expression -> INT DOBLEPT DOBLEPT POW PIZQ expression COMA expression PDER .
 
@@ -2989,7 +3066,7 @@ state 105
     COMA            reduce using rule 37 (expression -> INT DOBLEPT DOBLEPT POW PIZQ expression COMA expression PDER .)
 
 
-state 106
+state 107
 
     (38) expression -> FLOAT DOBLEPT DOBLEPT POWF PIZQ expression COMA expression PDER .
 

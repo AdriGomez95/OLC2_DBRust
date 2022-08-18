@@ -21,7 +21,7 @@ class Declaracion(Instruccion):
             newSimbolo.iniciarSimboloPrimitivo(self.identificador.nombre,retornoExpresion.valor, tipo = self.tipo )
 
             entorno.agregarSimobolo(newSimbolo)
-            print(f"aqui ***************  {self.identificador.nombre} ")
+            #print(f"aqui ***************  {self.tipo} ")
         else:
             variableAMostrar = self.identificador.nombre
             print(f"Error semantico asignacion de variable, ya existe: {variableAMostrar} ")
