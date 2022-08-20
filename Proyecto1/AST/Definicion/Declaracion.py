@@ -24,4 +24,4 @@ class Declaracion(Instruccion):
             #print(f"aqui ***************  {self.tipo} ")
         else:
             variableAMostrar = self.identificador.nombre
-            print(f"Error semantico asignacion de variable, ya existe: {variableAMostrar} ")
+            print(f"Error semantico declaracion de variable, ya existe: {variableAMostrar} ")

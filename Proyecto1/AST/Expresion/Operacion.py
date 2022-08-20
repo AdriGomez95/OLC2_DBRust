@@ -25,7 +25,7 @@ class TIPO_OPERACION(Enum):
     POWF = 16,
 
 class Operacion(Expression):
-    #1.ENTERO   2.DECIMAL   3.CADENA   4.BOOL   5.VOID   8.NULL   7.&STR(CADENA2)  6.CHAR 
+    #1.ENTERO   2.DECIMAL   3.CADENA   4.BOOLEAN   5.VOID   8.NULL   7.&STR(CADENA2)  6.CHAR 
     #1.INTEGER	2.FLOAT		3.STRING   4.CHAR	5.BOOL	 6.&STRING	7.NULL
 
 
@@ -77,6 +77,17 @@ class Operacion(Expression):
         [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
     ]
 
+    logicaDominante = [
+        [TIPO_DATO.BOOLEAN, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.BOOLEAN, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.BOOLEAN, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.BOOLEAN, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.BOOLEAN, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.BOOLEAN],
+    ]
 
     def __init__(self, exprIzq, tipo_operacion, exprDer, unario = False):
         self.exprIzq = exprIzq
@@ -266,5 +277,34 @@ class Operacion(Expression):
                 print(f"Error semantico en relacional ==, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
 
+
+
+
+
+
+
+
+
+                
+             
+#----------------------------------------------------------- LOGICA ---------------------------
+
+        elif self.tipo_operacion == TIPO_OPERACION.AND:
+            tipoResultante = Operacion.logicaDominante[retornoIzq.tipo][retornoDer.tipo]
+            if tipoResultante == TIPO_DATO.BOOLEAN:
+                return RetornoType(valor=(bool(retornoIzq.valor) and bool(retornoDer.valor)), tipo=tipoResultante)
+            elif tipoResultante == TIPO_DATO.NULL:
+                print(f"Error semantico en logica &&, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
+                return RetornoType()
+
+
+
+        elif self.tipo_operacion == TIPO_OPERACION.OR:
+            tipoResultante = Operacion.logicaDominante[retornoIzq.tipo][retornoDer.tipo]
+            if tipoResultante == TIPO_DATO.BOOLEAN:
+                return RetornoType(valor=(bool(retornoIzq.valor) or bool(retornoDer.valor)), tipo=tipoResultante)
+            elif tipoResultante == TIPO_DATO.NULL:
+                print(f"Error semantico en logica || no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
+                return RetornoType()
 
 

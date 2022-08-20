@@ -4,6 +4,7 @@ from idlelib.multicall import r
 
 import ply.yacc as yacc
 import ply.lex as lex
+from AST.Definicion.Asignacion import Asignacion
 
 from AST.Definicion.Declaracion import Declaracion
 from AST.Expresion.Identificador import Identificador
@@ -24,8 +25,10 @@ reservadas = {
     'int': 'INTT',
     'i64': 'INT',
     'f64': 'FLOAT',
+    'to_string': 'BUFER1',
+    'to_owned': 'BUFER2',
     'string': 'STR1',
-    '&str': 'STR2',
+    #'&str': 'STR2',
     'bool': 'BOOLEA',
     'char': 'CHAR',
 
@@ -40,11 +43,12 @@ reservadas = {
     'mut': 'MUT',
 
     #para sentencias de control
-    'print': 'PRINT'
+    'println': 'PRINT'
 }
 
 
 tokens = [
+    'PT',
     'DOBLEPT',
     'COMA',
     'PTCOMA',
@@ -77,11 +81,13 @@ tokens = [
     'DECIMAL',
     'ENTERO',
     'ID',
-    'CADENA'
+    'CADENA',
+    'STR2'
 ] + list(reservadas.values())
 
 
 #--------- DEFINICION DE TOKENS
+t_PT = r'\.'
 t_DOBLEPT = r'\:'
 t_COMA = r'\,'
 t_PTCOMA = r';'
@@ -130,6 +136,11 @@ def t_ENTERO(t):
         t.value = 0
     return t
 
+def t_STR2(t):
+    r"""&str"""
+    t.type = reservadas.get(t.value.lower(), 'STR2')
+    return t
+
 def t_ID(t):
     r"""[a-zA-Z_][a-zA-Z0-9_]*"""
     t.type = reservadas.get(t.value.lower(), 'ID')
@@ -142,7 +153,7 @@ def t_CADENA(t):
 
 def t_CHAR(t):  
     """\'.*?\'"""
-    t.value = t.value[1:-1]  # Eliminar las comillas dobles
+    t.value = t.value[1:-1]  # Eliminar las comillas simples
     return  t
 
 def t_newLine(t):
@@ -181,8 +192,7 @@ precedence = (
     ('left', 'AND'),
     ('nonassoc', 'MAYOR', 'MENORIGUAL', 'MENOR', 'MAYORIGUAL', 'IGUALIGUAL', 'DIFERENTE'),
     ('left', 'MAS', 'MENOS'),
-    ('left', 'MULTIPLICACION', 'DIVISION'),
-    ('left', 'MODULO'),
+    ('left', 'MULTIPLICACION', 'DIVISION', 'MODULO'),
     ('right', 'NOT', 'UMENOS')
 )
 
@@ -207,18 +217,8 @@ def p_instrucciones_instruccion(t):
 
 def p_instruccion(t):
     """instruccion : print_instruccion
-                   | variables
-                   | declaracion """
+                   | variables """
     t[0] = t[1]
-#borrar esto------------------------------------------------------------------------
-def p_declaracion(t):
-    """declaracion : INTT ID  IGUAL expression  PTCOMA
-                    | INTT ID PTCOMA"""
-    t[0] = Declaracion(Identificador(t[2]), t[4] , TIPO_DATO.ENTERO)
-
-#fin borrar------------------------------------------------------------------------
-
-
 
 
 
@@ -241,6 +241,7 @@ def p_variables(t):
         elif t[4] == '=':
             t[0] = Declaracion(Identificador(t[3]), t[5] , TIPO_DATO.ENTERO, "true")
         #else: #t[2]=='=' es una asignacion
+            #t[0] == Asignacion(Identificador(t[3]), t[5] )
 
 
 def p_tipo(t):
@@ -348,6 +349,20 @@ def p_expression_aritmetica(t):
                 t[0] = Operacion(t[6], TIPO_OPERACION.POW, t[8])
             elif t[4] == 'powf':
                 t[0] = Operacion(t[6], TIPO_OPERACION.POWF, t[8])
+
+
+
+def p_expression_nativa(t):
+    """expression : expression PT BUFER1 PIZQ PDER
+                  | expression PT BUFER2 PIZQ PDER"""
+    
+    t[0] = t[1]
+    #if t.slice[3].type == 'BUFER1':
+    #    Nativa(t[1], TIPO_DATO.CADENA, 1)
+    #    t[0] = t[1]
+    #elif t.slice[3].type == 'BUFER2':
+    #    Nativa(t[1], TIPO_DATO.CADENA, 1)
+    #    t[0] = t[1]
 
 
 
