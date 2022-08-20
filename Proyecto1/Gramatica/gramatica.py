@@ -4,14 +4,17 @@ from idlelib.multicall import r
 
 import ply.yacc as yacc
 import ply.lex as lex
+from AST.Ast import Ast
 from AST.Definicion.Asignacion import Asignacion
 
 from AST.Definicion.Declaracion import Declaracion
 from AST.Expresion.Identificador import Identificador
+from AST.Expresion.Llamada import Llamada
 from AST.Expresion.Operacion import TIPO_OPERACION, Operacion
 from AST.Expresion.Primitivo import Primitivo
 from Entorno.RetornoType import TIPO_DATO
 from AST.Sentencias.Print import Print
+from Entorno.Simbolos.Funcion import Funcion
 
 
 
@@ -21,8 +24,10 @@ from AST.Sentencias.Print import Print
 
 #PALABRAS RESERVADAS
 reservadas = {
+    #para funciones
+    'fn': 'FN',
+
     #tipos de dato
-    'int': 'INTT',
     'i64': 'INT',
     'f64': 'FLOAT',
     'to_string': 'BUFER1',
@@ -54,8 +59,8 @@ tokens = [
     'PTCOMA',
     'PIZQ',
     'PDER',
-    'CORIZQ',
-    'CORDER',
+    'LLAIZQ',
+    'LLADER',
 
 #logicas
     'AND',
@@ -93,8 +98,8 @@ t_COMA = r'\,'
 t_PTCOMA = r';'
 t_PIZQ = r'\('
 t_PDER = r'\)'
-t_CORIZQ = r'\['
-t_CORDER = r'\]'
+t_LLAIZQ = r'\{'
+t_LLADER = r'\}'
 
 #logicas
 t_AND = r'\&\&'
@@ -197,9 +202,87 @@ precedence = (
 )
 
 
+#def p_init(t):
+#    """init : instrucciones"""
+#    t[0] = t[1]
+
+
 def p_init(t):
-    """init : instrucciones"""
+    """init : funciones"""
+    t[0] = Ast(t[1])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def p_funciones(t):
+    """funciones : funciones funcion"""
+    t[1].append(t[2])
     t[0] = t[1]
+
+def p_funciones_funcion(t):
+    """funciones : funcion"""
+    t[0] = [t[1]]
+
+
+
+def p_funcion(t):
+    """funcion : FN ID PIZQ lista_parametros PDER bloque
+               | FN ID PIZQ PDER bloque"""
+    if len(t) == 7:
+        t[0] = Funcion(t[2],t[4],t[6], TIPO_DATO.FN)
+    else:
+        t[0] = Funcion(t[2],[], t[5], TIPO_DATO.FN)
+
+
+def p_lista_parametros(t):
+    """lista_parametros : lista_parametros COMA parametroo"""
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_lista_parametros_corte(t):
+    """lista_parametros : parametroo"""
+    t[0] = [t[1]]
+
+
+
+def p_parametroo(t): 
+    """parametroo : ID DOBLEPT tipo"""
+    id = Identificador(t[1])
+    t[0] = Declaracion(id, None, t[3], "false")
+
+
+
+def p_bloque(t):
+    """bloque : LLAIZQ instrucciones LLADER
+              | LLAIZQ LLADER"""
+    if len(t) == 4:
+        t[0] = t[2]
+    else:
+        t[0] = []
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ######## LISTA DE INSTRUCCIONES ########
@@ -216,19 +299,63 @@ def p_instrucciones_instruccion(t):
 ######## TIPOS DE INSTRUCCION ########
 
 def p_instruccion(t):
-    """instruccion : print_instruccion
-                   | variables """
+    """instruccion : llamada PTCOMA
+                   | variables PTCOMA
+                   | print_instruccion PTCOMA"""
     t[0] = t[1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######## LLAMADA DE FUNCIONES ########
+def p_llamada(t):
+    """llamada : ID PIZQ lista_expresiones PDER 
+               | ID PIZQ PDER """
+    if len(t) == 5:
+        t[0] = Llamada(t[1], t[3])
+    else:
+        t[0] = Llamada(t[1], [])
+
+def p_lista_expresiones(t):
+    """lista_expresiones : lista_expresiones COMA expression"""
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_lista_expresiones_corte(t):
+    """lista_expresiones : expression"""
+    t[0] = [t[1]]
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 ######## DECLARACION DE VARIABLES ########
 def p_variables(t):
-    """variables : LET MUT ID DOBLEPT tipo IGUAL expression PTCOMA
-		         | LET ID DOBLEPT tipo IGUAL expression PTCOMA
-		         | LET MUT ID IGUAL expression PTCOMA
-		         | LET ID IGUAL expression PTCOMA
-		         | ID IGUAL expression PTCOMA"""
+    """variables : LET MUT ID DOBLEPT tipo IGUAL expression 
+		         | LET ID DOBLEPT tipo IGUAL expression 
+		         | LET MUT ID IGUAL expression 
+		         | LET ID IGUAL expression 
+		         | ID IGUAL expression """
     #variables inmutables
     if t[3] == ':':
         t[0] = Declaracion(Identificador(t[2]), t[6] , t[4], "false")
@@ -269,11 +396,27 @@ def p_tipo(t):
 
 
 
+
+
+
+
+
+
+
+
+
 ######## SENTENCIAS DE CONTROL ########
 def p_print(t):
-    """print_instruccion : PRINT NOT PIZQ expression PDER PTCOMA"""
+    """print_instruccion : PRINT NOT PIZQ expression PDER"""
     instr = Print(t[4])
     t[0] = instr
+
+
+
+
+
+
+
 
 
 
@@ -363,6 +506,13 @@ def p_expression_nativa(t):
     #elif t.slice[3].type == 'BUFER2':
     #    Nativa(t[1], TIPO_DATO.CADENA, 1)
     #    t[0] = t[1]
+
+
+
+
+def p_otras_expresiones(t):
+    """expression : llamada"""
+    t[0] = t[1]
 
 
 

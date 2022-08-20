@@ -7,5 +7,5 @@ from Entorno.RetornoType import RetornoType
 class Expression(ABC):
 
     @abstractmethod
-    def obtenerValor(self, entorno, value) -> RetornoType:
+    def obtenerValor(self, entorno) -> RetornoType:
         pass

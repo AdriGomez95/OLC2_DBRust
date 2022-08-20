@@ -9,7 +9,8 @@ class TIPO_DATO(IntEnum):
     VOID = 4,
     NULL = 5,
     CADENA2 = 6,
-    CHAR = 7
+    CHAR = 7,
+    FN = 8
 
 
 class RetornoType:

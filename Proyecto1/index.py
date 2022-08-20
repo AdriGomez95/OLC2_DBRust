@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import tkinter.font as tkFont
+from Entorno.Simbolos.Funcion import Funcion
 
 #from flask import g
 
@@ -80,12 +81,27 @@ class Adriana:
         texto = self.txtEntrada.get(1.0, END)
 
         self.txtSalida.delete('1.0', 'end')
-        ENTORNO_RAIZ = EntornoTabla(None)
+        ENTORNO_RAIZ = EntornoTabla(self.txtSalida, None)
 
         if texto != '':
-            resultado = g.parse(texto)
-            for i in resultado:
-                i.ejecutarInstruccion(ENTORNO_RAIZ, self.txtSalida)
+            AST = g.parse(texto)
+            
+            #PASADA 1
+            for i in AST.listaInstrucciones:
+                #validar tipos de instrucciones
+                if isinstance(i, Funcion):
+                    existeFuncion = ENTORNO_RAIZ.existeFuncion(i.identificador)
+                
+                if not existeFuncion:
+                    ENTORNO_RAIZ.agregarFuncion(i)
+
+
+            #PASADA 2
+            if ENTORNO_RAIZ.existeFuncion("main"):
+                funcionMain = ENTORNO_RAIZ.obtenerFuncion("main")
+                funcionMain.ejecutarInstruccion(ENTORNO_RAIZ)
+            else:
+                print(f"No existe main")
 
 
 
