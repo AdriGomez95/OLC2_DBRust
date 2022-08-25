@@ -14,6 +14,7 @@ class Llamada(Instruccion, Expression):
         existeFuncion = entorno.existeFuncion(self.identificador)
 
         if not existeFuncion:
+            print(f"Error semantico en la llamada, no existe la funcion: {self.identificador}")
             return RetornoType()
 
         ENTORNO_FUNCION = EntornoTabla(entorno.txtSalida,entorno.padre)
@@ -23,7 +24,7 @@ class Llamada(Instruccion, Expression):
         ejecutoParametros = funcion.ejecutarParametros(ENTORNO_FUNCION, self.listaExpresiones, entorno)
 
         if not ejecutoParametros:
-            
+            print(f"Error semantico en los parametros de la funcion: {self.identificador}")
             return RetornoType()
 
         retorno = funcion.ejecutarInstruccion(ENTORNO_FUNCION)
