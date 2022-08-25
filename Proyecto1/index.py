@@ -86,7 +86,7 @@ class Adriana:
         if texto != '':
             AST = g.parse(texto)
             
-            #PASADA 1
+            #PASADA 1 PARA GUARDAR LAS INSTRUCCIONES
             for i in AST.listaInstrucciones:
                 #validar tipos de instrucciones
                 if isinstance(i, Funcion):
@@ -96,12 +96,12 @@ class Adriana:
                     ENTORNO_RAIZ.agregarFuncion(i)
 
 
-            #PASADA 2
+            #PASADA 2 PARA EJECUTAR EL MAIN
             if ENTORNO_RAIZ.existeFuncion("main"):
                 funcionMain = ENTORNO_RAIZ.obtenerFuncion("main")
                 funcionMain.ejecutarInstruccion(ENTORNO_RAIZ)
             else:
-                print(f"No existe main")
+                print(f"Error semantico, no existe funcion main")
 
 
 

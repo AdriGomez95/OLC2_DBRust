@@ -12,6 +12,7 @@ from AST.Expresion.Identificador import Identificador
 from AST.Expresion.Llamada import Llamada
 from AST.Expresion.Operacion import TIPO_OPERACION, Operacion
 from AST.Expresion.Primitivo import Primitivo
+from AST.Sentencias.Return_Instr import Return_Instr
 from Entorno.RetornoType import TIPO_DATO
 from AST.Sentencias.Print import Print
 from Entorno.Simbolos.Funcion import Funcion
@@ -26,6 +27,7 @@ from Entorno.Simbolos.Funcion import Funcion
 reservadas = {
     #para funciones
     'fn': 'FN',
+    'return': 'RETURN',
 
     #tipos de dato
     'i64': 'INT',
@@ -33,7 +35,6 @@ reservadas = {
     'to_string': 'BUFER1',
     'to_owned': 'BUFER2',
     'string': 'STR1',
-    #'&str': 'STR2',
     'bool': 'BOOLEA',
     'char': 'CHAR',
 
@@ -237,12 +238,21 @@ def p_funciones_funcion(t):
 
 
 def p_funcion(t):
-    """funcion : FN ID PIZQ lista_parametros PDER bloque
+    """funcion : FN ID PIZQ lista_parametros PDER MENOS MAYOR tipo bloque
+               | FN ID PIZQ lista_parametros PDER bloque
                | FN ID PIZQ PDER bloque"""
-    if len(t) == 7:
-        t[0] = Funcion(t[2],t[4],t[6], TIPO_DATO.FN)
+    if len(t) == 10:    #funcion con tipo definido
+            t[0] = Funcion(t[2], t[4], t[9], t[8])
     else:
-        t[0] = Funcion(t[2],[], t[5], TIPO_DATO.FN)
+        if t[4] == ')': #es funcion main
+            if t[2] == 'main':
+                t[0] = Funcion(t[2],[], t[5], TIPO_DATO.FN)
+            else:
+                t[0] = Funcion(t[2],[], t[5], TIPO_DATO.NULL)
+
+        else:   #es funcion normal pero sin tipo definido
+            t[0] = Funcion(t[2],t[4],t[6], TIPO_DATO.NULL)
+
 
 
 def p_lista_parametros(t):
@@ -301,7 +311,8 @@ def p_instrucciones_instruccion(t):
 def p_instruccion(t):
     """instruccion : llamada PTCOMA
                    | variables PTCOMA
-                   | print_instruccion PTCOMA"""
+                   | print_instruccion PTCOMA
+                   | return_instruccion PTCOMA"""
     t[0] = t[1]
 
 
@@ -318,7 +329,7 @@ def p_instruccion(t):
 
 
 
-######## LLAMADA DE FUNCIONES ########
+######## LLAMADA DE FUNCIONES Y RETURN ########
 def p_llamada(t):
     """llamada : ID PIZQ lista_expresiones PDER 
                | ID PIZQ PDER """
@@ -335,6 +346,15 @@ def p_lista_expresiones(t):
 def p_lista_expresiones_corte(t):
     """lista_expresiones : expression"""
     t[0] = [t[1]]
+
+def p_return_instruccion(t):
+    """return_instruccion : RETURN expression
+                          | RETURN """
+    if len(t) == 3: #cuando viene una expresion, se le manda tipo de dato null porque
+                    #la expresion al compilarla, ya trae su tipo
+        t[0] = Return_Instr(TIPO_DATO.NULL, t[2])
+    else:
+        t[0] = Return_Instr(TIPO_DATO.FN, None)
 
 
 

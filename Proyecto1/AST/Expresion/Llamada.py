@@ -14,16 +14,16 @@ class Llamada(Instruccion, Expression):
         existeFuncion = entorno.existeFuncion(self.identificador)
 
         if not existeFuncion:
-            #manejo de error
             return RetornoType()
 
         ENTORNO_FUNCION = EntornoTabla(entorno.txtSalida,entorno.padre)
+        ENTORNO_FUNCION.tablaFunciones = entorno.tablaFunciones
         funcion = entorno.obtenerFuncion(self.identificador)
 
         ejecutoParametros = funcion.ejecutarParametros(ENTORNO_FUNCION, self.listaExpresiones, entorno)
 
         if not ejecutoParametros:
-            #manejo de errores
+            
             return RetornoType()
 
         retorno = funcion.ejecutarInstruccion(ENTORNO_FUNCION)

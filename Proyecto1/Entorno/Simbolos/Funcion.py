@@ -1,3 +1,4 @@
+from typing import List
 from AST.Abstract.Instruccion import Instruccion
 from Entorno.RetornoType import RetornoType, TIPO_DATO
 from Entorno.Simbolo import Simbolo
@@ -11,15 +12,20 @@ class Funcion(Simbolo, Instruccion):
         super().iniciarSimboloFuncion(identificador,listaParametros,listaInstrucciones,tipo)
 
 
+    #1.ENTERO   2.DECIMAL   3.CADENA   4.BOOLEAN   5.VOID   6.NULL   7.&STR(CADENA2)  8.CHAR   9.FN
     comparacionTipo = [
-        [TIPO_DATO.ENTERO, TIPO_DATO.DECIMAL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
-        [TIPO_DATO.DECIMAL, TIPO_DATO.DECIMAL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
-        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.CADENA, TIPO_DATO.NULL, TIPO_DATO.NULL],
-        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.BOOLEAN, TIPO_DATO.NULL],
-        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.VOID],
+        [TIPO_DATO.ENTERO, TIPO_DATO.DECIMAL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.DECIMAL, TIPO_DATO.DECIMAL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.CADENA, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.BOOLEAN, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.CADENA2, TIPO_DATO.NULL, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.CHAR, TIPO_DATO.NULL],
+        [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.FN],
     ]
 
-    def ejecutarParametros(self, entornoFuncion, expresiones: [], entornoQueLlamo) -> bool:
+    def ejecutarParametros(self, entornoFuncion, expresiones: list(), entornoQueLlamo) -> bool:
         declaraciones  = self.parametros
 
         if len(declaraciones) != len(expresiones):
@@ -42,11 +48,15 @@ class Funcion(Simbolo, Instruccion):
             if valorRetorno is not None:
                 if isinstance(valorRetorno, RetornoType):
                     validarTipo = Funcion.comparacionTipo[self.tipo][valorRetorno.tipo]
+                    #print(f"valorRetorno: {valorRetorno}")
+                    #print(f"validarTipo: {validarTipo}")
 
                     if validarTipo is not TIPO_DATO.NULL:
                         return valorRetorno
 
                     else:
                         #manejo de errores
+                        print(f"Error semantico en la funcion, tipo de funcion no valido para la expresion a retornar")
+                    
                         return RetornoType()
 
