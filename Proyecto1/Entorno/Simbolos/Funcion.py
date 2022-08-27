@@ -25,7 +25,7 @@ class Funcion(Simbolo, Instruccion):
         [TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL,   TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.NULL, TIPO_DATO.FN],
     ]
 
-    def ejecutarParametros(self, entornoFuncion, expresiones: list(), entornoQueLlamo) -> bool:
+    def ejecutarParametros(self, entornoFuncion, expresiones: [], entornoQueLlamo) -> bool:
         declaraciones  = self.parametros
 
         if len(declaraciones) != len(expresiones):

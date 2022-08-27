@@ -12,6 +12,7 @@ from AST.Expresion.Identificador import Identificador
 from AST.Expresion.Llamada import Llamada
 from AST.Expresion.Operacion import TIPO_OPERACION, Operacion
 from AST.Expresion.Primitivo import Primitivo
+from AST.Sentencias.If_Inst import If_inst
 from AST.Sentencias.Return_Instr import Return_Instr
 from Entorno.RetornoType import TIPO_DATO
 from AST.Sentencias.Print import Print
@@ -49,7 +50,9 @@ reservadas = {
     'mut': 'MUT',
 
     #para sentencias de control
-    'println': 'PRINT'
+    'println': 'PRINT',
+    'if': 'IF',
+    'else': 'ELSE'
 }
 
 
@@ -149,7 +152,7 @@ def t_STR2(t):
 
 def t_ID(t):
     r"""[a-zA-Z_][a-zA-Z0-9_]*"""
-    t.type = reservadas.get(t.value.lower(), 'ID')
+    t.type = reservadas.get(t.value, 'ID')
     return t
 
 def t_CADENA(t):  
@@ -312,7 +315,8 @@ def p_instruccion(t):
     """instruccion : llamada PTCOMA
                    | variables PTCOMA
                    | print_instruccion PTCOMA
-                   | return_instruccion PTCOMA"""
+                   | return_instruccion PTCOMA
+                   | if_instruccion """
     t[0] = t[1]
 
 
@@ -433,11 +437,33 @@ def p_print(t):
 
 
 
+def p_if_instruccion(t):
+    """if_instruccion : IF PIZQ expression PDER bloque
+                      | IF PIZQ expression PDER bloque ELSE bloque 
+                      | IF PIZQ expression PDER bloque lista_else_if
+                      | IF PIZQ expression PDER bloque lista_else_if ELSE bloque """
 
+    if len(t) == 6:
+        t[0] = If_inst(t[3], t[5], [],[])
+    elif len(t) == 7:
+        t[0] = If_inst(t[3], t[5], t[6],[])
+    elif len(t) == 8:
+        t[0] = If_inst(t[3], t[5], [],t[7])
+    else:
+        t[0] = If_inst(t[3], t[5], t[6],t[8])
 
+def p_lista_else_if(t):
+    """lista_else_if : lista_else_if else_if"""
+    t[1].append(t[2])
+    t[0] = t[1]
 
+def p_else_if_corte(t):
+    """lista_else_if : else_if """
+    t[0] = [t[1]]
 
-
+def p_else_if(t):
+    """else_if : ELSE IF PIZQ expression PDER bloque """
+    t[0] = If_inst(t[4],t[6], [],[])
 
 
 

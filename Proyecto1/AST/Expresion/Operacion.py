@@ -215,9 +215,11 @@ class Operacion(Expression):
         elif self.tipo_operacion == TIPO_OPERACION.MENOR:
             tipoResultante = Operacion.RelacionalDominante[retornoIzq.tipo][retornoDer.tipo]
             if tipoResultante == TIPO_DATO.ENTERO:
-                return RetornoType(valor=(retornoIzq.valor < retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor < retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.DECIMAL:
-                return RetornoType(valor=(retornoIzq.valor < retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor < retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
+            elif tipoResultante == TIPO_DATO.CADENA:
+                return RetornoType(valor=(retornoIzq.valor > retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.NULL:
                 print(f"Error semantico en relacional <, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
@@ -227,9 +229,11 @@ class Operacion(Expression):
         elif self.tipo_operacion == TIPO_OPERACION.MAYOR:
             tipoResultante = Operacion.RelacionalDominante[retornoIzq.tipo][retornoDer.tipo]
             if tipoResultante == TIPO_DATO.ENTERO:
-                return RetornoType(valor=(retornoIzq.valor > retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor > retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.DECIMAL:
-                return RetornoType(valor=(retornoIzq.valor > retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor > retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
+            elif tipoResultante == TIPO_DATO.CADENA:
+                return RetornoType(valor=(retornoIzq.valor > retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.NULL:
                 print(f"Error semantico en relacional >, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
@@ -239,9 +243,11 @@ class Operacion(Expression):
         elif self.tipo_operacion == TIPO_OPERACION.MENORIGUAL:
             tipoResultante = Operacion.RelacionalDominante[retornoIzq.tipo][retornoDer.tipo]
             if tipoResultante == TIPO_DATO.ENTERO:
-                return RetornoType(valor=(retornoIzq.valor <= retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor <= retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.DECIMAL:
-                return RetornoType(valor=(retornoIzq.valor <= retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor <= retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
+            elif tipoResultante == TIPO_DATO.CADENA:
+                return RetornoType(valor=(retornoIzq.valor <= retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.NULL:
                 print(f"Error semantico en relacional <=, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
@@ -251,9 +257,11 @@ class Operacion(Expression):
         elif self.tipo_operacion == TIPO_OPERACION.MAYORIGUAL:
             tipoResultante = Operacion.RelacionalDominante[retornoIzq.tipo][retornoDer.tipo]
             if tipoResultante == TIPO_DATO.ENTERO:
-                return RetornoType(valor=(retornoIzq.valor >= retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor >= retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.DECIMAL:
-                return RetornoType(valor=(retornoIzq.valor >= retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor >= retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
+            elif tipoResultante == TIPO_DATO.CADENA:
+                return RetornoType(valor=(retornoIzq.valor >= retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.NULL:
                 print(f"Error semantico en relacional >=, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
@@ -263,9 +271,11 @@ class Operacion(Expression):
         elif self.tipo_operacion == TIPO_OPERACION.DIFERENTE:
             tipoResultante = Operacion.RelacionalDominante[retornoIzq.tipo][retornoDer.tipo]
             if tipoResultante == TIPO_DATO.ENTERO:
-                return RetornoType(valor=(retornoIzq.valor != retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor != retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.DECIMAL:
-                return RetornoType(valor=(retornoIzq.valor != retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor != retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
+            elif tipoResultante == TIPO_DATO.CADENA:
+                return RetornoType(valor=(retornoIzq.valor != retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.NULL:
                 print(f"Error semantico en relacional !=, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
@@ -275,9 +285,11 @@ class Operacion(Expression):
         elif self.tipo_operacion == TIPO_OPERACION.IGUALIGUAL:
             tipoResultante = Operacion.RelacionalDominante[retornoIzq.tipo][retornoDer.tipo]
             if tipoResultante == TIPO_DATO.ENTERO:
-                return RetornoType(valor=(retornoIzq.valor == retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor == retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.DECIMAL:
-                return RetornoType(valor=(retornoIzq.valor == retornoDer.valor), tipo=tipoResultante)
+                return RetornoType(valor=(retornoIzq.valor == retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
+            elif tipoResultante == TIPO_DATO.CADENA:
+                return RetornoType(valor=(retornoIzq.valor == retornoDer.valor), tipo=TIPO_DATO.BOOLEAN)
             elif tipoResultante == TIPO_DATO.NULL:
                 print(f"Error semantico en relacional ==, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
@@ -301,7 +313,6 @@ class Operacion(Expression):
             elif tipoResultante == TIPO_DATO.NULL:
                 print(f"Error semantico en logica &&, no se puede comparar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
-
 
 
         elif self.tipo_operacion == TIPO_OPERACION.OR:
