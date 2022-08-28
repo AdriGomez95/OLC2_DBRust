@@ -30,6 +30,7 @@ class Funcion(Simbolo, Instruccion):
 
         if len(declaraciones) != len(expresiones):
             # manejo de error
+            print(f"Error semantico en la funcion, la lista de parametros no coincide")
             return False
 
         index = 0

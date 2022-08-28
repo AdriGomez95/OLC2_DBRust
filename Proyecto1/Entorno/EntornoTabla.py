@@ -8,6 +8,7 @@ class EntornoTabla:
         self.padre = padre
         self.tabla = {}
         self.tablaFunciones = {}
+        self.tablaClases = {}
         self.txtSalida = txtSalida
 
     def existeSimbolo(self,identificador):

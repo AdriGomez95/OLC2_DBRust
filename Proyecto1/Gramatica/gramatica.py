@@ -14,6 +14,7 @@ from AST.Expresion.Operacion import TIPO_OPERACION, Operacion
 from AST.Expresion.Primitivo import Primitivo
 from AST.Sentencias.If_Inst import If_inst
 from AST.Sentencias.Return_Instr import Return_Instr
+from AST.Sentencias.While_Inst import While_inst
 from Entorno.RetornoType import TIPO_DATO
 from AST.Sentencias.Print import Print
 from Entorno.Simbolos.Funcion import Funcion
@@ -26,9 +27,10 @@ from Entorno.Simbolos.Funcion import Funcion
 
 #PALABRAS RESERVADAS
 reservadas = {
-    #para funciones
+    #para funciones y struct
     'fn': 'FN',
     'return': 'RETURN',
+    'struct': 'STRUCT',
 
     #tipos de dato
     'i64': 'INT',
@@ -45,14 +47,15 @@ reservadas = {
     'pow': 'POW',
     'powf': 'POWF',
 
-    #para declarar variables
+    #para declarar variables 
     'let': 'LET',
     'mut': 'MUT',
 
     #para sentencias de control
     'println': 'PRINT',
     'if': 'IF',
-    'else': 'ELSE'
+    'else': 'ELSE',
+    'while': 'WHILE'
 }
 
 
@@ -316,7 +319,8 @@ def p_instruccion(t):
                    | variables PTCOMA
                    | print_instruccion PTCOMA
                    | return_instruccion PTCOMA
-                   | if_instruccion """
+                   | if_instruccion 
+                   | while_instruccion """
     t[0] = t[1]
 
 
@@ -380,20 +384,18 @@ def p_variables(t):
 		         | LET MUT ID IGUAL expression 
 		         | LET ID IGUAL expression 
 		         | ID IGUAL expression """
-    #variables inmutables
-    if t[3] == ':':
+                 
+    if len(t) == 8:
+        t[0] = Declaracion(Identificador(t[3]), t[7] , t[5], "true")
+    elif len(t) == 7:#variables inmutables
         t[0] = Declaracion(Identificador(t[2]), t[6] , t[4], "false")
-    elif t[3] == '=':
+    elif len(t) == 6:
+        t[0] = Declaracion(Identificador(t[3]), t[5] , TIPO_DATO.ENTERO, "true")
+    elif len(t) == 5:#variables inmutables
         t[0] = Declaracion(Identificador(t[2]), t[4] , TIPO_DATO.ENTERO, "false")
     else:
-        #variables mutables
-        if t[4] == ':':
-            t[0] = Declaracion(Identificador(t[3]), t[7] , t[5], "true")
-        elif t[4] == '=':
-            t[0] = Declaracion(Identificador(t[3]), t[5] , TIPO_DATO.ENTERO, "true")
-        #else: #t[2]=='=' es una asignacion
-            #t[0] == Asignacion(Identificador(t[3]), t[5] )
-
+        t[0] = Asignacion(Identificador(t[1]), t[3])
+    
 
 def p_tipo(t):
     """tipo : INT
@@ -464,6 +466,21 @@ def p_else_if_corte(t):
 def p_else_if(t):
     """else_if : ELSE IF PIZQ expression PDER bloque """
     t[0] = If_inst(t[4],t[6], [],[])
+
+
+
+def p_while_instruccion(t):
+    """while_instruccion : WHILE expression bloque """
+    t[0] = While_inst(t[2], t[3])
+
+
+
+
+
+
+
+
+
 
 
 

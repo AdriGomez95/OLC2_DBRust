@@ -10,7 +10,10 @@ class TIPO_DATO(IntEnum):
     NULL = 5,
     CADENA2 = 6,
     CHAR = 7,
-    FN = 8
+    FN = 8,
+    OBJETO = 9,
+    ARRAY = 10,
+    VECTOR = 11
 
 
 class RetornoType:

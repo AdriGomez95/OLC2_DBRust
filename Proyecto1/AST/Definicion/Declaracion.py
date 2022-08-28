@@ -29,12 +29,12 @@ class Declaracion(Instruccion):
             tipoExpresion = retornoExpresion.tipo
 
             if tipoDeclaracion != tipoExpresion:
-                # manejo de errores
+                print(f"Error semantico en declaracion, el tipo de expresion no coincide con el tipo de variable ")
                 return
 
             existeSimbolo = entorno.existeSimbolo(self.identificador.nombre)
             if existeSimbolo:
-                # manejo de errores
+                print(f"Error semantico en declaracion, ya existe la variable: {self.identificador.nombre} ")
                 return
 
             newSimbolo = Simbolo()
@@ -47,19 +47,4 @@ class Declaracion(Instruccion):
             pass
 
 
-'''
-    def ejecutarInstruccion(self, entorno, txtSalida):
-        existeSimbolo = entorno.existeSimbolo(self.identificador.nombre)
 
-        if not existeSimbolo:
-            retornoExpresion = self.expresion.obtenerValor(entorno)
-
-            newSimbolo = Simbolo()
-            newSimbolo.iniciarSimboloPrimitivo(self.identificador.nombre,retornoExpresion.valor, tipo = self.tipo )
-
-            entorno.agregarSimobolo(newSimbolo)
-            #print(f"aqui ***************  {self.tipo} ")
-        else:
-            variableAMostrar = self.identificador.nombre
-            print(f"Error semantico declaracion de variable, ya existe: {variableAMostrar} ")
-'''

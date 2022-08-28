@@ -9,13 +9,13 @@ class Asignacion(Instruccion):
         self.identificador = identificador
         self.expresion = expresion
 
-    def ejecutarInstruccion(self, entorno, txtSalida):
+    def ejecutarInstruccion(self, entorno):
         existeSimbolo = entorno.obtenerSimbolo(self.identificador.nombre)
 
         if existeSimbolo:
             retornoExpresion = self.expresion.obtenerValor(entorno)
 
-            existeSimbolo.iniciarSimboloPrimitivo(self.identificador.nombre,retornoExpresion.valor)
+            existeSimbolo.iniciarSimboloPrimitivo(self.identificador.nombre,retornoExpresion.valor,retornoExpresion.tipo)
 
 
         else:
