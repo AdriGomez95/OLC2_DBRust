@@ -1,4 +1,5 @@
 from Entorno.Simbolo import Simbolo
+from Entorno.Simbolos.Clase import Clase
 from Entorno.Simbolos.Funcion import Funcion
 
 
@@ -23,6 +24,16 @@ class EntornoTabla:
 
         return False
 
+
+    def existeSimboloEnActual(self,identificador):
+        entorno = self
+        existe = entorno.tabla.get(identificador)
+        if existe is not None:
+            return True
+        else:
+            return False
+
+
     def existeSimboloEnEntornoActual(self,identificador):
         existe = self.tabla.get(identificador)
         if existe is not None:
@@ -41,8 +52,11 @@ class EntornoTabla:
 
         return Simbolo()
 
-    def agregarSimobolo(self,simboloAdd:Simbolo):
+    def agregarSimbolo(self, simboloAdd:Simbolo):
         self.tabla[simboloAdd.identificador] = simboloAdd
+
+
+
 
 
 
@@ -74,3 +88,37 @@ class EntornoTabla:
 
     def agregarFuncion(self,funcionAdd:Funcion):
         self.tablaFunciones[funcionAdd.identificador] = funcionAdd
+
+
+
+
+
+
+
+# ---------- Para manejar clases
+
+    def existeClase (self,identificador):
+        entorno = self
+
+        while entorno is not None:
+            existe = entorno.tablaClases.get(identificador)
+            if existe is not None:
+                return True
+            else:
+                entorno = entorno.padre
+
+        return False
+
+    def obtenerClase(self,identificador) -> Clase:
+        entorno = self
+        while entorno is not None:
+            simbolo = entorno.tablaClases.get(identificador)
+            if simbolo is not None:
+                return simbolo
+            else:
+                entorno = entorno.padre
+
+        return None
+
+    def agregarClase(self,claseAgregar:Clase):
+        self.tablaClases[claseAgregar.identificador] = claseAgregar

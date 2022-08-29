@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import tkinter.font as tkFont
+from AST.Definicion.Objetos.GuardarClase import GuardarClase
 from Entorno.Simbolos.Funcion import Funcion
 
 #from flask import g
@@ -92,8 +93,13 @@ class Adriana:
                 if isinstance(i, Funcion):
                     existeFuncion = ENTORNO_RAIZ.existeFuncion(i.identificador)
                 
-                if not existeFuncion:
-                    ENTORNO_RAIZ.agregarFuncion(i)
+                    if not existeFuncion:
+                        ENTORNO_RAIZ.agregarFuncion(i)
+
+                
+                elif isinstance(i, GuardarClase):
+                    i.ejecutarInstruccion(ENTORNO_RAIZ)
+
 
 
             #PASADA 2 PARA EJECUTAR EL MAIN

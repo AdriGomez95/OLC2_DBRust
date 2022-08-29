@@ -14,7 +14,6 @@ class Asignacion(Instruccion):
 
         if existeSimbolo:
             retornoExpresion = self.expresion.obtenerValor(entorno)
-
             existeSimbolo.iniciarSimboloPrimitivo(self.identificador.nombre,retornoExpresion.valor,retornoExpresion.tipo)
 
 

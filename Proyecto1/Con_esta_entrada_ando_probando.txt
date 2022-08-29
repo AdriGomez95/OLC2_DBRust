@@ -1,0 +1,18 @@
+
+fn main() {
+    let bool1: bool = true;
+    let bool2: bool = false;
+
+
+    MiFuncion();
+
+}
+
+fn MiFuncion(){
+	Color negro = Color("negro");
+	println!(negro.nombre);
+}
+
+struct Color{
+	nombre: string
+}

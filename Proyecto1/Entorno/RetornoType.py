@@ -13,7 +13,8 @@ class TIPO_DATO(IntEnum):
     FN = 8,
     OBJETO = 9,
     ARRAY = 10,
-    VECTOR = 11
+    VECTOR = 11,
+    STRUCT = 12
 
 
 class RetornoType:

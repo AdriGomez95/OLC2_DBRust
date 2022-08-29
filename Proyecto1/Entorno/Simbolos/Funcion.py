@@ -29,35 +29,42 @@ class Funcion(Simbolo, Instruccion):
         declaraciones  = self.parametros
 
         if len(declaraciones) != len(expresiones):
-            # manejo de error
             print(f"Error semantico en la funcion, la lista de parametros no coincide")
             return False
 
         index = 0
         for declaracion in declaraciones:
+
+            if declaracion.esReferencia is True:
+                declaracion.entornoReferencia = entornoQueLlamo
+                declaracion.valorReferencia =  expresiones[index]
+
             declaracion.retornoCompilado = expresiones[index].obtenerValor(entornoQueLlamo)
             declaracion.ejecutarInstruccion(entornoFuncion)
             index += 1
-            #manejar try catch para los errores
+
         return True
 
-    def ejecutarInstruccion(self, entorno):
 
+    def ejecutarInstruccion(self, entorno):    
         for instruccion in self.instrucciones:
+
+            if instruccion is None: continue
             valorRetorno = instruccion.ejecutarInstruccion(entorno)
 
             if valorRetorno is not None:
+
                 if isinstance(valorRetorno, RetornoType):
                     validarTipo = Funcion.comparacionTipo[self.tipo][valorRetorno.tipo]
-                    #print(f"valorRetorno: {valorRetorno}")
-                    #print(f"validarTipo: {validarTipo}")
 
                     if validarTipo is not TIPO_DATO.NULL:
                         return valorRetorno
 
                     else:
-                        #manejo de errores
                         print(f"Error semantico en la funcion, tipo de funcion no valido para la expresion a retornar")
                     
                         return RetornoType()
 
+
+    def __str__(self):
+        return f"Funcion {self.identificador}"

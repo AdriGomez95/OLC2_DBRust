@@ -16,6 +16,15 @@ class Simbolo:
 
 
 
+        # simbolo de instancia
+        self.idClase = ""
+        self.entornoInstancia = None
+
+
+        # referencia
+        self.entornoReferencia = None
+        self.valorReferencia = None
+
     def iniciarSimboloPrimitivo(self, identificador, valor, tipo, constante=False):
         self.identificador = identificador
         self.valor = valor
@@ -29,4 +38,15 @@ class Simbolo:
         self.instrucciones = listaInstrucciones
         self.tipo = tipo
 
+
+    def iniciarSimboloClase(self, idClase, listaInstrucciones):
+        self.identificador = idClase
+        self.instrucciones = listaInstrucciones
+
+
+    def iniciarSimboloInstancia(self, idClase, idInstancia, entornoInstancia, tipo):
+        self.idClase = idClase
+        self.identificador = idInstancia
+        self.entornoInstancia = entornoInstancia
+        self.tipo = tipo
 
