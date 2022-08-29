@@ -9,10 +9,12 @@ fn main() {
 }
 
 fn MiFuncion(){
-	Color negro = Color("negro");
-	println!(negro.nombre);
+	Color negro = Color("negro","darks",100);
+ 	println!(negro.tipo);
 }
 
 struct Color{
-	nombre: string
+	nombre: string,
+	tipo: string,
+	tamanio: i64
 }

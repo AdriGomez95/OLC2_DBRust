@@ -21,7 +21,7 @@ class InstanciaObjeto(Expression):
             return
 
         clasePlantilla:Clase  = entorno.obtenerClase(self.idClase)
-        ENTORNO_CLASE = EntornoTabla(entorno.consola, None)
+        ENTORNO_CLASE = EntornoTabla(entorno.txtSalida, None)
 
         if len(clasePlantilla.instrucciones) != len(self.listaExpresiones):
             print(f"Error semantico, las expresiones enviadas no coincide con las propiedades de la clase")

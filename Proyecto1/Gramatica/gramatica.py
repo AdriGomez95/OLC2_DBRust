@@ -246,25 +246,22 @@ def p_clase_funcion(t):
 
 
 
+
+######## CLASES (STRUCTS) ########
 def p_clase(t):
-    """  clase : STRUCT ID bloqueClase"""
-    t[0] = GuardarClase(idClase=t[2], listaInstrucciones=t[3])
-
-def p_bloque_clase(t):
-    """ bloqueClase : LLAIZQ instrs_clase LLADER
-                    | LLAIZQ  LLADER"""
-    if len(t) == 4:
-        t[0] = t[2]
+    """  clase : STRUCT ID LLAIZQ lista_parametros LLADER
+               | STRUCT ID LLAIZQ  LLADER"""
+    if len(t) == 6:
+        t[0] = GuardarClase(idClase=t[2], listaInstrucciones=t[4])
     else:
-        t[0] = []
+        t[0] = GuardarClase(idClase=t[2], listaInstrucciones=[])
 
 
 
 
 
 
-
-
+######## FUNCIONES ########
 def p_funcion(t):
     """funcion : FN ID PIZQ lista_parametros PDER MENOS MAYOR tipo bloque
                | FN ID PIZQ lista_parametros PDER bloque
@@ -292,6 +289,11 @@ def p_lista_parametros_corte(t):
     """lista_parametros : parametroo"""
     t[0] = [t[1]]
 
+def p_parametroo(t): 
+    """parametroo : ID DOBLEPT tipo"""
+    id = Identificador(t[1])
+    t[0] = Declaracion(id, None, t[3], "true")
+
 
 
 def p_bloque(t):
@@ -305,32 +307,6 @@ def p_bloque(t):
 
 
 
-
-######## INSTRUCCIONES DE CLASE ########
-def p_instrs_clase(t):
-    """ instrs_clase : instrs_clase COMA parametroo """
-    t[1].append(t[3])
-    t[0] = t[1]
-
-
-def p_instrs_clase_corte(t):
-    """ instrs_clase :  parametroo """
-    t[0] = [t[1]]
-
-
-def p_instr(t):
-    """ instr : parametroo"""
-    t[0] = t[1]
-
-
-
-
-
-
-def p_parametroo(t): 
-    """parametroo : ID DOBLEPT tipo"""
-    id = Identificador(t[1])
-    t[0] = Declaracion(id, None, t[3], "true")
 
 
 
@@ -379,9 +355,19 @@ def p_instruccion(t):
 
 ######## DECLARACION OBJETO ########
 def p_declaracion_objeto(t):
-    """ declaracion_objeto : ID ID IGUAL expression """
+    """ declaracion_objeto : ID ID IGUAL instancia_objeto """
     t[0] = CrearInstanciaObjeto(idClase=t[1], idInstancia=t[2], expresion=t[4])
 
+
+
+# INSTANCIA OBJETO -------------------------
+def p_instancia_objeto(t):
+    """ instancia_objeto : ID PIZQ lista_expresiones PDER
+                         | ID PIZQ PDER """
+    if len(t) == 5:
+        t[0] = InstanciaObjeto(idClase=t[1], listaExpresiones=t[3])
+    else:
+        t[0] = InstanciaObjeto(idClase=t[1], listaExpresiones=[])
 
 
 
@@ -537,7 +523,7 @@ def p_while_instruccion(t):
 
 
 
-######## LO USA LLAMADA Y FUNCIONES DE ARRIBA ########
+######## LO USA LLAMADA Y OBJETOS DE ARRIBA ########
 def p_lista_expresiones(t):
     """lista_expresiones : lista_expresiones COMA expression"""
     t[1].append(t[3])
@@ -636,8 +622,7 @@ def p_expression_nativa(t):
 
 def p_otras_expresiones(t):
     """expression : llamada
-                  | acceso_objeto_expresion
-                  | instancia_objeto """
+                  | acceso_objeto_expresion """
     t[0] = t[1]
 
 
@@ -672,16 +657,6 @@ def p_expression_primitiva(t):
 
 
 
-# INSTANCIA OBJETO -------------------------
-def p_instancia_objeto(t):
-    """ instancia_objeto : ID PIZQ lista_expresiones PDER
-                         | ID PIZQ PDER """
-    if len(t) == 5:
-        t[0] = InstanciaObjeto(idClase=t[1], listaExpresiones=t[3])
-    else:
-        t[0] = InstanciaObjeto(idClase=t[1], listaExpresiones=[])
-
-
 
 # ACCESO A OBJETOS  ----------------------
 def p_acceso_objeto_expresion(t):
@@ -712,7 +687,6 @@ def p_acceso_objeto_cort(t):
 
 def p_error(t):
     print(f'Se encontro un error sintactico: {t.value[0]}')
-
 
 
 
