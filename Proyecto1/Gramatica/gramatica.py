@@ -39,8 +39,8 @@ reservadas = {
     #tipos de dato
     'i64': 'INT',
     'f64': 'FLOAT',
-    'to_string': 'BUFER1',
-    'to_owned': 'BUFER2',
+    #'to_string': 'BUFER1',
+    #'to_owned': 'BUFER2',
     'string': 'STR1',
     'bool': 'BOOLEA',
     'char': 'CHAR',
@@ -99,7 +99,9 @@ tokens = [
     'ID',
     'CADENA',
     'STR2',
-    'STRUCT'
+    'STRUCT',
+    'TOSTRING',
+    'TOOWNED'
 ] + list(reservadas.values())
 
 
@@ -153,6 +155,16 @@ def t_ENTERO(t):
         t.value = 0
     return t
 
+def t_TOOWNED(t):
+    r""".to_owned"""
+    t.type = reservadas.get(t.value.lower(), 'TOOWNED')
+    return t
+
+def t_TOSTRING(t):
+    r""".to_string"""
+    t.type = reservadas.get(t.value.lower(), 'TOSTRING')
+    return t
+
 def t_STRUCT(t):
     r"""struct"""
     t.type = reservadas.get(t.value.lower(), 'STRUCT')
@@ -165,7 +177,7 @@ def t_STR2(t):
 
 def t_ID(t):
     r"""[a-zA-Z_][a-zA-Z0-9_]*"""
-    t.type = reservadas.get(t.value, 'ID')
+    t.type = reservadas.get(t.value.lower(), 'ID')
     return t
 
 def t_CADENA(t):  
@@ -606,9 +618,8 @@ def p_expression_aritmetica(t):
 
 
 def p_expression_nativa(t):
-    """expression : expression PT BUFER1 PIZQ PDER
-                  | expression PT BUFER2 PIZQ PDER"""
-    
+    """expression : expression TOSTRING PIZQ PDER
+                  | expression TOOWNED PIZQ PDER"""
     t[0] = t[1]
     #if t.slice[3].type == 'BUFER1':
     #    Nativa(t[1], TIPO_DATO.CADENA, 1)
@@ -616,7 +627,6 @@ def p_expression_nativa(t):
     #elif t.slice[3].type == 'BUFER2':
     #    Nativa(t[1], TIPO_DATO.CADENA, 1)
     #    t[0] = t[1]
-
 
 
 
@@ -673,6 +683,7 @@ def p_acceso_objeto(t):
 def p_acceso_objeto_cort(t):
     """ acceso_objeto : expression"""
     t[0] = [t[1]]
+
 
 
 
