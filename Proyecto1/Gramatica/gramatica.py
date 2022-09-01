@@ -17,6 +17,7 @@ from AST.Expresion.Llamada import Llamada
 from AST.Expresion.Operacion import TIPO_OPERACION, Operacion
 from AST.Expresion.Primitivo import Primitivo
 from AST.Sentencias.Break_Inst import Break_Inst
+from AST.Sentencias.Continue_Inst import Continue_Inst
 from AST.Sentencias.If_Inst import If_inst
 from AST.Sentencias.Return_Instr import Return_Instr
 from AST.Sentencias.While_Inst import While_inst
@@ -36,6 +37,7 @@ reservadas = {
     'fn': 'FN',
     'return': 'RETURN',
     'break': 'BREAK',
+    'continue': 'CONTINUE',
 
     #tipos de dato
     'i64': 'INT',
@@ -359,6 +361,7 @@ def p_instruccion(t):
                    | print_instruccion PTCOMA
                    | return_instruccion PTCOMA
                    | break_instruccion PTCOMA
+                   | continue_instruccion PTCOMA
                    | if_instruccion 
                    | while_instruccion """
     t[0] = t[1]
@@ -425,6 +428,10 @@ def p_return_instruccion(t):
 def p_break_instruccion(t):
     """break_instruccion : BREAK """
     t[0] = Break_Inst(TIPO_DATO.BREAK)
+
+def p_continue_instruccion(t):
+    """continue_instruccion : CONTINUE """
+    t[0] = Continue_Inst(TIPO_DATO.CONTINUE_STR)
 
 
 

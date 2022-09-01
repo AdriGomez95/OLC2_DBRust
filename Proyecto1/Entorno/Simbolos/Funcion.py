@@ -1,3 +1,4 @@
+from http.client import CONTINUE
 from typing import List
 from AST.Abstract.Instruccion import Instruccion
 from Entorno.RetornoType import RetornoType, TIPO_DATO
@@ -57,6 +58,8 @@ class Funcion(Simbolo, Instruccion):
                 if isinstance(valorRetorno, RetornoType):
                     if valorRetorno == TIPO_DATO.BREAK:
                         return valorRetorno
+                    elif valorRetorno == TIPO_DATO.CONTINUE_STR:
+                            pass
                     else:
                         validarTipo = Funcion.comparacionTipo[self.tipo][valorRetorno.tipo]
 
