@@ -18,6 +18,7 @@ from AST.Expresion.Operacion import TIPO_OPERACION, Operacion
 from AST.Expresion.Primitivo import Primitivo
 from AST.Sentencias.Break_Inst import Break_Inst
 from AST.Sentencias.Continue_Inst import Continue_Inst
+from AST.Sentencias.For_Inst import For_Inst
 from AST.Sentencias.If_Inst import If_inst
 from AST.Sentencias.Return_Instr import Return_Instr
 from AST.Sentencias.While_Inst import While_inst
@@ -62,7 +63,9 @@ reservadas = {
     'println': 'PRINT',
     'if': 'IF',
     'else': 'ELSE',
-    'while': 'WHILE'
+    'while': 'WHILE',
+    'for': 'FOR',
+    'in': 'IN'
 }
 
 
@@ -202,8 +205,8 @@ def t_newLine(t):
     t.lexer.lineno += t.value.count('\n')
 
 
-def t_COMENTARIOUNILINEA(t):
-    r'\#.*\n'
+def t_COMENTARIO_SIMPLE(t):
+    r'//.*\n'
     t.lexer.lineno += 1
 
 
@@ -363,7 +366,8 @@ def p_instruccion(t):
                    | break_instruccion PTCOMA
                    | continue_instruccion PTCOMA
                    | if_instruccion 
-                   | while_instruccion """
+                   | while_instruccion 
+                   | for_instruccion """
     t[0] = t[1]
 
 
@@ -540,6 +544,11 @@ def p_while_instruccion(t):
     """while_instruccion : WHILE expression bloque """
     t[0] = While_inst(t[2], t[3])
 
+
+
+def p_for_instruccion(t):
+    """for_instruccion : FOR ID IN expression bloque"""
+    t[0] = For_Inst(t[2], t[4], t[5])
 
 
 
