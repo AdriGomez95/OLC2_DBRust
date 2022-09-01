@@ -16,6 +16,7 @@ from AST.Expresion.InstanciaObjeto.InstanciaObjeto import InstanciaObjeto
 from AST.Expresion.Llamada import Llamada
 from AST.Expresion.Operacion import TIPO_OPERACION, Operacion
 from AST.Expresion.Primitivo import Primitivo
+from AST.Sentencias.Break_Inst import Break_Inst
 from AST.Sentencias.If_Inst import If_inst
 from AST.Sentencias.Return_Instr import Return_Instr
 from AST.Sentencias.While_Inst import While_inst
@@ -34,7 +35,7 @@ reservadas = {
     #para funciones y struct
     'fn': 'FN',
     'return': 'RETURN',
-    #'struct': 'STRUCT',
+    'break': 'BREAK',
 
     #tipos de dato
     'i64': 'INT',
@@ -72,6 +73,8 @@ tokens = [
     'PDER',
     'LLAIZQ',
     'LLADER',
+    'CIZQ',
+    'CDER',
 
 #logicas
     'AND',
@@ -114,6 +117,8 @@ t_PIZQ = r'\('
 t_PDER = r'\)'
 t_LLAIZQ = r'\{'
 t_LLADER = r'\}'
+t_CIZQ = r'\['
+t_CDER = r'\]'
 
 #logicas
 t_AND = r'\&\&'
@@ -193,6 +198,11 @@ def t_CHAR(t):
 def t_newLine(t):
     r"""\n+"""
     t.lexer.lineno += t.value.count('\n')
+
+
+def t_COMENTARIOUNILINEA(t):
+    r'\#.*\n'
+    t.lexer.lineno += 1
 
 
 t_ignore = " \t\r"
@@ -348,6 +358,7 @@ def p_instruccion(t):
                    | declaracion_objeto PTCOMA
                    | print_instruccion PTCOMA
                    | return_instruccion PTCOMA
+                   | break_instruccion PTCOMA
                    | if_instruccion 
                    | while_instruccion """
     t[0] = t[1]
@@ -374,8 +385,8 @@ def p_declaracion_objeto(t):
 
 # INSTANCIA OBJETO -------------------------
 def p_instancia_objeto(t):
-    """ instancia_objeto : ID PIZQ lista_expresiones PDER
-                         | ID PIZQ PDER """
+    """ instancia_objeto : ID LLAIZQ lista_expresiones LLADER
+                         | ID LLAIZQ LLADER """
     if len(t) == 5:
         t[0] = InstanciaObjeto(idClase=t[1], listaExpresiones=t[3])
     else:
@@ -411,7 +422,9 @@ def p_return_instruccion(t):
     else:
         t[0] = Return_Instr(TIPO_DATO.FN, None)
 
-
+def p_break_instruccion(t):
+    """break_instruccion : BREAK """
+    t[0] = Break_Inst(TIPO_DATO.BREAK)
 
 
 
@@ -557,6 +570,8 @@ def p_expression_logica(t):
         t[0] = Operacion(t[1], TIPO_OPERACION.AND, t[3])
     if t[2] == '||':
         t[0] = Operacion(t[1], TIPO_OPERACION.OR, t[3])
+    if t[1] == '!':
+        t[0] = Operacion(t[2], TIPO_OPERACION.NOT, [])
 
 
 

@@ -55,15 +55,18 @@ class Funcion(Simbolo, Instruccion):
             if valorRetorno is not None:
 
                 if isinstance(valorRetorno, RetornoType):
-                    validarTipo = Funcion.comparacionTipo[self.tipo][valorRetorno.tipo]
-
-                    if validarTipo is not TIPO_DATO.NULL:
+                    if valorRetorno == TIPO_DATO.BREAK:
                         return valorRetorno
-
                     else:
-                        print(f"Error semantico en la funcion, tipo de funcion no valido para la expresion a retornar")
-                    
-                        return RetornoType()
+                        validarTipo = Funcion.comparacionTipo[self.tipo][valorRetorno.tipo]
+
+                        if validarTipo is not TIPO_DATO.NULL:
+                            return valorRetorno
+
+                        else:
+                            print(f"Error semantico en la funcion, tipo de funcion no valido para la expresion a retornar")
+                        
+                            return RetornoType()
 
 
     def __str__(self):

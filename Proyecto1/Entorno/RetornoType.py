@@ -14,7 +14,8 @@ class TIPO_DATO(IntEnum):
     OBJETO = 9,
     ARRAY = 10,
     VECTOR = 11,
-    STRUCT = 12
+    STRUCT = 12,
+    BREAK = 13
 
 
 class RetornoType:

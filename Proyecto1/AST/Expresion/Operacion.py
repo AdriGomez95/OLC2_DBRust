@@ -324,3 +324,14 @@ class Operacion(Expression):
                 return RetornoType()
 
 
+        elif self.tipo_operacion == TIPO_OPERACION.NOT:
+            if retornoIzq.tipo == TIPO_DATO.ENTERO:
+                return RetornoType(valor=(-1*retornoIzq.valor), tipo= retornoIzq.tipo)
+            if retornoIzq.tipo == TIPO_DATO.DECIMAL:
+                return RetornoType(valor=(-1*retornoIzq.valor), tipo= retornoIzq.tipo)
+            elif retornoIzq.tipo == TIPO_DATO.NULL:
+                print(f"Error semantico en logica ! no se puede operar")
+                return RetornoType()
+                
+
+
