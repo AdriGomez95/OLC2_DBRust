@@ -5,12 +5,15 @@ from idlelib.multicall import r
 import ply.yacc as yacc
 import ply.lex as lex
 from AST.Ast import Ast
+from AST.Definicion.Arreglo.CrearArreglo import CrearArreglo
 from AST.Definicion.Asignacion import Asignacion
 
 from AST.Definicion.Declaracion import Declaracion
 from AST.Definicion.Objetos.CrearInstanciaObjeto import CrearInstanciaObjeto
 from AST.Definicion.Objetos.GuardarClase import GuardarClase
 from AST.Expresion.Acceso.AccesObjeto import AccesoObjeto
+from AST.Expresion.Acceso.AccesoArreglo import AccesoArreglo
+from AST.Expresion.Arreglo.ArrayData import ArrayData
 from AST.Expresion.Identificador import Identificador
 from AST.Expresion.InstanciaObjeto.InstanciaObjeto import InstanciaObjeto
 from AST.Expresion.Llamada import Llamada
@@ -39,6 +42,8 @@ reservadas = {
     'return': 'RETURN',
     'break': 'BREAK',
     'continue': 'CONTINUE',
+    'mod': 'MOD',
+    'pub': 'PUB',
 
     #tipos de dato
     'i64': 'INT',
@@ -292,9 +297,15 @@ def p_clase(t):
 def p_funcion(t):
     """funcion : FN ID PIZQ lista_parametros PDER MENOS MAYOR tipo bloque
                | FN ID PIZQ lista_parametros PDER bloque
-               | FN ID PIZQ PDER bloque"""
+               | FN ID PIZQ PDER bloque
+	           | MOD ID bloque 
+	           | PUB MOD ID bloque """
     if len(t) == 10:    #funcion con tipo definido
             t[0] = Funcion(t[2], t[4], t[9], t[8])
+    elif len(t) == 4: #para el modo base de datos
+            t[0] = Funcion(t[2], [], t[3], TIPO_DATO.FN)
+    elif len(t) == 5: #para el modo base de datos
+            t[0] = Funcion(t[3], [], t[4], TIPO_DATO.FN)
     else:
         if t[4] == ')': #es funcion main
             if t[2] == 'main':
@@ -325,6 +336,7 @@ def p_parametroo(t):
 
 def p_bloque(t):
     """bloque : LLAIZQ instrucciones LLADER
+              | LLAIZQ funcion LLADER
               | LLAIZQ LLADER"""
     if len(t) == 4:
         t[0] = t[2]
@@ -454,7 +466,8 @@ def p_variables(t):
 		         | LET ID DOBLEPT tipo IGUAL expression 
 		         | LET MUT ID IGUAL expression 
 		         | LET ID IGUAL expression 
-		         | ID IGUAL expression"""
+		         | ID IGUAL expression                 
+                 | LET ID DOBLEPT CIZQ tipo PTCOMA ENTERO CDER IGUAL expression"""
                  
     if len(t) == 8:
         t[0] = Declaracion(Identificador(t[3]), t[7] , t[5], "true")
@@ -464,8 +477,10 @@ def p_variables(t):
         t[0] = Declaracion(Identificador(t[3]), t[5] , TIPO_DATO.ENTERO, "true")
     elif len(t) == 5:#variables inmutables
         t[0] = Declaracion(Identificador(t[2]), t[4] , TIPO_DATO.ENTERO, "false")
-    else:#es asignacion
+    elif len(t) == 4:#es asignacion
         t[0] = Asignacion(Identificador(t[1]), t[3])
+    elif len(t) == 11:#es un arreglo o un vector
+        t[0] = CrearArreglo(idInstancia=t[2], dimensiones=t[7], tipo=t[5], expresion=t[10])
     
 
 def p_tipo(t):
@@ -663,7 +678,9 @@ def p_expression_nativa(t):
 
 def p_otras_expresiones(t):
     """expression : llamada
-                  | acceso_objeto_expresion """
+                  | acceso_objeto_expresion 
+                  | array_data 
+                  | acceso_array_expresion"""
     t[0] = t[1]
 
 
@@ -718,6 +735,33 @@ def p_acceso_objeto_cort(t):
 
 
 
+
+
+
+
+# ACCESO A ARREGLOS  ----------------------
+def p_array_data(t):
+    """ array_data : CIZQ lista_expresiones CDER"""
+    t[0] = ArrayData(listaExpresiones = t[2])
+
+def p_acceso_array(t):
+    """acceso_array_expresion : ID dimensiones"""
+    t[0] = AccesoArreglo( idArreglo = t[1] ,listaExpresiones = t[2])
+
+
+def p_dimensiones(t):
+    """ dimensiones : dimensiones dimension"""
+    t[1].append(t[2])
+    t[0] = t[1]
+
+
+def p_dimensiones_corte(t):
+    """ dimensiones : dimension"""
+    t[0] = [t[1]]
+
+def p_dimension(t):
+    """ dimension : CIZQ expression CDER"""
+    t[0] = t[2]
 
 
 

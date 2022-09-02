@@ -50,3 +50,8 @@ class Simbolo:
         self.entornoInstancia = entornoInstancia
         self.tipo = tipo
 
+    def iniciarSimboloArreglo(self, tipo, dimensiones, valores):
+        self.dimensiones =dimensiones
+        self.valores = valores
+        self.tipo = tipo
+
