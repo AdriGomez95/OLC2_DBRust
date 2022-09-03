@@ -11,6 +11,7 @@ from AST.Definicion.Asignacion import Asignacion
 from AST.Definicion.Declaracion import Declaracion
 from AST.Definicion.Objetos.CrearInstanciaObjeto import CrearInstanciaObjeto
 from AST.Definicion.Objetos.GuardarClase import GuardarClase
+from AST.Definicion.Vector.CrearVector import CrearVector
 from AST.Expresion.Acceso.AccesObjeto import AccesoObjeto
 from AST.Expresion.Acceso.AccesoArreglo import AccesoArreglo
 from AST.Expresion.Arreglo.ArrayData import ArrayData
@@ -63,6 +64,10 @@ reservadas = {
     #para declarar variables 
     'let': 'LET',
     'mut': 'MUT',
+    'vec': 'VEC',
+    'new': 'NEW',
+    'push': 'PUSH',
+    'with_capacity': 'WITHCAPACITY',
 
     #para sentencias de control
     'println': 'PRINT',
@@ -114,7 +119,8 @@ tokens = [
     'STR2',
     'STRUCT',
     'TOSTRING',
-    'TOOWNED'
+    'TOOWNED',
+    'VEC2'
 ] + list(reservadas.values())
 
 
@@ -168,6 +174,12 @@ def t_ENTERO(t):
         t.value = int(t.value)
     except ValueError:
         t.value = 0
+    return t
+
+
+def t_VEC2(t):
+    r"""vec!"""
+    t.type = reservadas.get(t.value.lower(), 'VEC2')
     return t
 
 def t_TOOWNED(t):
@@ -298,14 +310,15 @@ def p_funcion(t):
     """funcion : FN ID PIZQ lista_parametros PDER MENOS MAYOR tipo bloque
                | FN ID PIZQ lista_parametros PDER bloque
                | FN ID PIZQ PDER bloque
-	           | MOD ID bloque 
-	           | PUB MOD ID bloque """
+	           | MOD ID bloque2 
+	           | PUB MOD ID PIZQ PDER bloque 
+	           | PUB FN ID PIZQ PDER bloque """
     if len(t) == 10:    #funcion con tipo definido
             t[0] = Funcion(t[2], t[4], t[9], t[8])
     elif len(t) == 4: #para el modo base de datos
             t[0] = Funcion(t[2], [], t[3], TIPO_DATO.FN)
-    elif len(t) == 5: #para el modo base de datos
-            t[0] = Funcion(t[3], [], t[4], TIPO_DATO.FN)
+    elif len(t) == 7: #para el modo base de datos
+            t[0] = Funcion(t[3], [], t[6], TIPO_DATO.FN)
     else:
         if t[4] == ')': #es funcion main
             if t[2] == 'main':
@@ -333,10 +346,21 @@ def p_parametroo(t):
     t[0] = Declaracion(id, None, t[3], "true")
 
 
+def p_bloque2(t):
+    """bloque2 : bloque2 bloque"""
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_bloque2_corte(t):
+    """bloque2 : bloque"""
+    t[0] = [t[1]]
+
+
+
 
 def p_bloque(t):
     """bloque : LLAIZQ instrucciones LLADER
-              | LLAIZQ funcion LLADER
+              | LLAIZQ clases_funciones LLADER
               | LLAIZQ LLADER"""
     if len(t) == 4:
         t[0] = t[2]
@@ -467,7 +491,9 @@ def p_variables(t):
 		         | LET MUT ID IGUAL expression 
 		         | LET ID IGUAL expression 
 		         | ID IGUAL expression                 
-                 | LET ID DOBLEPT CIZQ tipo PTCOMA ENTERO CDER IGUAL expression"""
+                 | LET ID DOBLEPT CIZQ tipo PTCOMA ENTERO CDER IGUAL expression
+                 | LET MUT ID DOBLEPT VEC MENOR tipo MAYOR IGUAL VEC DOBLEPT DOBLEPT tamanioVector
+                 | LET MUT ID DOBLEPT VEC MENOR tipo MAYOR IGUAL VEC2 expression """
                  
     if len(t) == 8:
         t[0] = Declaracion(Identificador(t[3]), t[7] , t[5], "true")
@@ -481,6 +507,10 @@ def p_variables(t):
         t[0] = Asignacion(Identificador(t[1]), t[3])
     elif len(t) == 11:#es un arreglo o un vector
         t[0] = CrearArreglo(idInstancia=t[2], dimensiones=t[7], tipo=t[5], expresion=t[10])
+    elif len(t) == 14:
+        t[0] = CrearVector(idVector=t[3], tipo=t[7], listaValores=[], tamanio=t[13])
+    elif len(t) == 12:
+        pass
     
 
 def p_tipo(t):
@@ -505,6 +535,14 @@ def p_tipo(t):
 
 
 
+
+def p_tamanioVector(t):
+    """tamanioVector : NEW PIZQ PDER
+                     | WITHCAPACITY PIZQ expression PDER"""
+    if len(t) == 4:
+        t[0] = 0
+    else:
+        t[0] = t[3]
 
 
 

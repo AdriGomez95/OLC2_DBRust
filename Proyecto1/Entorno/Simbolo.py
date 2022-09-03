@@ -55,3 +55,9 @@ class Simbolo:
         self.valores = valores
         self.tipo = tipo
 
+    def iniciarSimboloVector(self,nombreVectorcito, tipo, valores, tamanioVectorcito):
+        self.nombreVectorcito = nombreVectorcito
+        self.valores = valores
+        self.tipo = tipo
+        self.tamanioVectorcito = tamanioVectorcito
+
