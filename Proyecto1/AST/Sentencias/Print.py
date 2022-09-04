@@ -1,7 +1,7 @@
 import tkinter
 
 from AST.Abstract.Instruccion import Instruccion
-from main import Adriana
+from index import Adriana
 
 
 class Print(Instruccion):

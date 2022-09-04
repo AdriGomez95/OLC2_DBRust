@@ -1,7 +1,6 @@
 from AST.Abstract.Instruccion import Instruccion
-from AST.Errores.CustomError import CustomError
 from Entorno.RetornoType import TIPO_DATO, RetornoType
-#errorL = []
+
 
 class If_inst(Instruccion):
 
@@ -10,7 +9,6 @@ class If_inst(Instruccion):
         self.listaInstrucionPrincipal = listaInstrucionPrincipal
         self.listaelseif = listaelseif
         self.bloqueInstElse = bloqueInstElse
-        #self.erroresL = erroresL
 
     def ejecutarInstruccion(self, entorno):
 
@@ -18,7 +16,6 @@ class If_inst(Instruccion):
 
         if condicionPrincipal.tipo != TIPO_DATO.BOOLEAN:
             print(f"Error semantico en el if, tipo de dato a comparar no valido")
-            #self.erroresL.append(CustomError("Semantico", "Error semantico en el if, tipo de dato a comparar no valido", 0,0))
             return RetornoType()
         else:
 
@@ -38,7 +35,6 @@ class If_inst(Instruccion):
 
                     if condicionPrincipal.tipo != TIPO_DATO.BOOLEAN:
                         print(f"Error semantico en el else if, tipo de dato a comparar no valido")
-                        #self.erroresL.append(CustomError("Semantico", "Error semantico en el else if, tipo de dato a comparar no valido", 0,0))
                         return RetornoType()
                     else:
                         if condicionElseIf.valor == True:
@@ -57,4 +53,3 @@ class If_inst(Instruccion):
                     if valorRetorno is not None:
                         if isinstance(valorRetorno, RetornoType):
                             return valorRetorno
-
