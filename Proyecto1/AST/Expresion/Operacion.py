@@ -1,10 +1,11 @@
 from enum import Enum
 #from multiprocessing.pool import INIT
 from AST.Abstract.Expression import Expression
+from AST.Errores.CustomError import CustomError
 from Entorno.RetornoType import RetornoType, TIPO_DATO
 import math
 
-
+erroresL = []
 
 class TIPO_OPERACION(Enum):
     SUMA = 1,
@@ -126,6 +127,7 @@ class Operacion(Expression):
             elif tipoResultante == TIPO_DATO.CADENA:
                 return RetornoType(valor=(str(retornoIzq.valor) + str(retornoDer.valor)), tipo=tipoResultante)
             elif tipoResultante == TIPO_DATO.NULL:
+                #erroresL.append(CustomError("Semantico", "imposible sumar, tipos incompatibles", self.linea, self.columna))
                 print(f"Error semantico en suma, no se puede operar: {retornoIzq.tipo} con {retornoDer.tipo}")
                 return RetornoType()
 

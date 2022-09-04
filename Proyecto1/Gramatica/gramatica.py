@@ -5,6 +5,7 @@ from idlelib.multicall import r
 import ply.yacc as yacc
 import ply.lex as lex
 from AST.Ast import Ast
+from AST.BasesDatos.BasesDatos import BasesDatos
 from AST.Definicion.Arreglo.CrearArreglo import CrearArreglo
 from AST.Definicion.Asignacion import Asignacion
 
@@ -29,8 +30,12 @@ from AST.Sentencias.While_Inst import While_inst
 from Entorno.RetornoType import TIPO_DATO
 from AST.Sentencias.Print import Print
 from Entorno.Simbolos.Funcion import Funcion
+from AST.Errores.CustomError import CustomError
+from AST.ReporteTS.ReporteTS import ReporteTS
 
-
+erroresL = []
+reporteTS = []
+reporteDB = []
 
 #--------------------------------------------------------------------
 #----------------- Definicion del analizador lexico -----------------
@@ -230,10 +235,16 @@ def t_COMENTARIO_SIMPLE(t):
 t_ignore = " \t\r"
 
 
+
 def t_error(t):
-    print(f"Se encontro un error lexico {t.value[0]}")
+#    print(f"Se encontro un error lexico {t.value[0]}")
+    erroresL.append(CustomError("Lexico", "token no definido: " + t.value[0], t.lexer.lineno, find_column(input, t)))
     t.lexer.skip(1)
 
+
+def find_column(inp, token):
+    line_start = inp.rfind('\n', 0, token.lexpos) + 1
+    return (token.lexpos - line_start) + 1
 
 
 #CREANDO EL LEXER 
@@ -287,6 +298,11 @@ def p_clase_funcion(t):
     t[0] = t[1]
 
 
+def p_clase_funcion_error(t):
+    """ clase_funcion : error LLADER """
+    erroresL.append(CustomError("Sintactico", " error en: " + str(t[1].value), t.lineno(1), find_column(input, t.slice[1])))
+    t[0] = ""
+
 
 
 
@@ -297,8 +313,10 @@ def p_clase(t):
                | STRUCT ID LLAIZQ  LLADER"""
     if len(t) == 6:
         t[0] = GuardarClase(idClase=t[2], listaInstrucciones=t[4])
+        reporteTS.append(ReporteTS(t[2], "Struct", "Global", t.lineno(1), find_column(input, t.slice[1])))
     else:
         t[0] = GuardarClase(idClase=t[2], listaInstrucciones=[])
+        reporteTS.append(ReporteTS(t[2], "Struct", "Global", t.lineno(1), find_column(input, t.slice[1])))
 
 
 
@@ -315,19 +333,25 @@ def p_funcion(t):
 	           | PUB FN ID PIZQ PDER bloque """
     if len(t) == 10:    #funcion con tipo definido
             t[0] = Funcion(t[2], t[4], t[9], t[8])
+            reporteTS.append(ReporteTS(t[2], "Funcion", "Global", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 4: #para el modo base de datos
             t[0] = Funcion(t[2], [], t[3], TIPO_DATO.FN)
+            reporteDB.append(BasesDatos(t[2], "Base de datos", t.lineno(1)))
     elif len(t) == 7: #para el modo base de datos
             t[0] = Funcion(t[3], [], t[6], TIPO_DATO.FN)
+            reporteDB.append(BasesDatos(t[3], "Tabla de la base de datos", t.lineno(1)))
     else:
         if t[4] == ')': #es funcion main
             if t[2] == 'main':
                 t[0] = Funcion(t[2],[], t[5], TIPO_DATO.FN)
+                reporteTS.append(ReporteTS(t[2], "Main", "Global", t.lineno(1), find_column(input, t.slice[1])))
             else:
                 t[0] = Funcion(t[2],[], t[5], TIPO_DATO.NULL)
+            reporteTS.append(ReporteTS(t[2], "Main", "Global", t.lineno(1), find_column(input, t.slice[1])))
 
         else:   #es funcion normal pero sin tipo definido
             t[0] = Funcion(t[2],t[4],t[6], TIPO_DATO.NULL)
+            reporteTS.append(ReporteTS(t[2], "Funcion", "Global", t.lineno(1), find_column(input, t.slice[1])))
 
 
 
@@ -344,6 +368,7 @@ def p_parametroo(t):
     """parametroo : ID DOBLEPT tipo"""
     id = Identificador(t[1])
     t[0] = Declaracion(id, None, t[3], "true")
+    reporteTS.append(ReporteTS(t[1], "ID", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 
 def p_bloque2(t):
@@ -409,6 +434,14 @@ def p_instruccion(t):
 
 
 
+def p_error_sintaxis(t):
+    """ instruccion : error PTCOMA """
+    t[0] = -1
+    erroresL.append(CustomError("Sintactico", "error en: " + str(t[1].value), t.lineno(1), find_column(input, t.slice[1])))
+
+
+
+
 
 
 
@@ -423,6 +456,7 @@ def p_instruccion(t):
 def p_declaracion_objeto(t):
     """ declaracion_objeto : ID ID IGUAL instancia_objeto """
     t[0] = CrearInstanciaObjeto(idClase=t[1], idInstancia=t[2], expresion=t[4])
+    reporteTS.append(ReporteTS(t[1], "Objeto Struct", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 
 
@@ -462,16 +496,20 @@ def p_return_instruccion(t):
     if len(t) == 3: #cuando viene una expresion, se le manda tipo de dato null porque
                     #la expresion al compilarla, ya trae su tipo
         t[0] = Return_Instr(TIPO_DATO.NULL, t[2])
+        reporteTS.append(ReporteTS("Return", "Return", "Local", t.lineno(1), find_column(input, t.slice[1])))
     else:
         t[0] = Return_Instr(TIPO_DATO.FN, None)
+        reporteTS.append(ReporteTS("Return", "Return", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 def p_break_instruccion(t):
     """break_instruccion : BREAK """
     t[0] = Break_Inst(TIPO_DATO.BREAK)
+    reporteTS.append(ReporteTS("Break", "Break", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 def p_continue_instruccion(t):
     """continue_instruccion : CONTINUE """
     t[0] = Continue_Inst(TIPO_DATO.CONTINUE_STR)
+    reporteTS.append(ReporteTS("Continue", "Continue", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 
 
@@ -497,19 +535,27 @@ def p_variables(t):
                  
     if len(t) == 8:
         t[0] = Declaracion(Identificador(t[3]), t[7] , t[5], "true")
+        reporteTS.append(ReporteTS(t[3], "Declaracion", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 7:#variables inmutables
         t[0] = Declaracion(Identificador(t[2]), t[6] , t[4], "false")
+        reporteTS.append(ReporteTS(t[2], "Declaracion", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 6:
         t[0] = Declaracion(Identificador(t[3]), t[5] , TIPO_DATO.ENTERO, "true")
+        reporteTS.append(ReporteTS(t[3], "Declaracion", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 5:#variables inmutables
         t[0] = Declaracion(Identificador(t[2]), t[4] , TIPO_DATO.ENTERO, "false")
+        reporteTS.append(ReporteTS(t[2], "Declaracion", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 4:#es asignacion
         t[0] = Asignacion(Identificador(t[1]), t[3])
+        reporteTS.append(ReporteTS(t[1], "Asignacion", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 11:#es un arreglo o un vector
         t[0] = CrearArreglo(idInstancia=t[2], dimensiones=t[7], tipo=t[5], expresion=t[10])
+        reporteTS.append(ReporteTS(t[2], "Arreglo", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 14:
         t[0] = CrearVector(idVector=t[3], tipo=t[7], listaValores=[], tamanio=t[13])
+        reporteTS.append(ReporteTS(t[3], "Vector", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 12:
+        reporteTS.append(ReporteTS(t[3], "Vector", "Local", t.lineno(1), find_column(input, t.slice[1])))
         pass
     
 
@@ -560,6 +606,7 @@ def p_print(t):
     """print_instruccion : PRINT NOT PIZQ expression PDER"""
     instr = Print(t[4])
     t[0] = instr
+    reporteTS.append(ReporteTS("Print", "Sentencia", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 
 
@@ -571,12 +618,16 @@ def p_if_instruccion(t):
 
     if len(t) == 6:
         t[0] = If_inst(t[3], t[5], [],[])
+        reporteTS.append(ReporteTS("If", "Sentencia", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 7:
         t[0] = If_inst(t[3], t[5], t[6],[])
+        reporteTS.append(ReporteTS("If", "Sentencia", "Local", t.lineno(1), find_column(input, t.slice[1])))
     elif len(t) == 8:
         t[0] = If_inst(t[3], t[5], [],t[7])
+        reporteTS.append(ReporteTS("If", "Sentencia", "Local", t.lineno(1), find_column(input, t.slice[1])))
     else:
         t[0] = If_inst(t[3], t[5], t[6],t[8])
+        reporteTS.append(ReporteTS("If", "Sentencia", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 def p_lista_else_if(t):
     """lista_else_if : lista_else_if else_if"""
@@ -596,12 +647,14 @@ def p_else_if(t):
 def p_while_instruccion(t):
     """while_instruccion : WHILE expression bloque """
     t[0] = While_inst(t[2], t[3])
+    reporteTS.append(ReporteTS("While", "Sentencia", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 
 
 def p_for_instruccion(t):
     """for_instruccion : FOR ID IN expression bloque"""
     t[0] = For_Inst(t[2], t[4], t[5])
+    reporteTS.append(ReporteTS("For", "Sentencia", "Local", t.lineno(1), find_column(input, t.slice[1])))
 
 
 
@@ -810,7 +863,7 @@ def p_dimension(t):
 
 
 def p_error(t):
-    print(f'Se encontro un error sintactico: {t.value[0]}')
+    print(f'Se encontro un error sintactico: {t.value}')
 
 
 
@@ -820,8 +873,31 @@ def p_error(t):
 #----------------- Definicion del parser -----------------
 #---------------------------------------------------------
 
+
 parser = yacc.yacc()
-def parse(input):
+
+def getErrores():
+    return erroresL
+
+def getreporteTS():
+    return reporteTS
+
+def getreporteDB():
+    return reporteDB
+
+input = ''
+
+def parse(inp):
     global lexer
+    global input
+    global erroresL
+    global reporteTS
+    global reporteDB
+
+
+    erroresL = []
+    reporteTS = []
+    reporteDB = []
+    input = inp
     lexer = lex.lex()
-    return parser.parse(input)
+    return parser.parse(inp)

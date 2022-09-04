@@ -1,7 +1,6 @@
 from AST.Abstract.Instruccion import Instruccion
 from Entorno.RetornoType import RetornoType, TIPO_DATO
 
-
 class CrearInstanciaObjeto(Instruccion):
 
     def __init__(self,idClase, idInstancia, expresion):
