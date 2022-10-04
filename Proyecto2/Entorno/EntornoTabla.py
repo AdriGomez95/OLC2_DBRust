@@ -14,6 +14,8 @@ class EntornoTabla:
         self.generador = generador
         self.tamanio = 0
 
+
+
     def existeSimbolo(self,identificador):
         entorno = self
 
@@ -27,6 +29,7 @@ class EntornoTabla:
         return False
 
 
+
     def existeSimboloEnActual(self,identificador):
         entorno = self
         existe = entorno.tabla.get(identificador)
@@ -36,12 +39,15 @@ class EntornoTabla:
             return False
 
 
+
     def existeSimboloEnEntornoActual(self,identificador):
         existe = self.tabla.get(identificador)
         if existe is not None:
             return True
         else:
             return False
+
+
 
     def obtenerSimbolo(self,identificador) -> Simbolo:
         entorno = self
@@ -51,11 +57,14 @@ class EntornoTabla:
                 return simbolo
             else:
                 entorno = entorno.padre
-
         return Simbolo()
+
+
 
     def agregarSimbolo(self, simboloAdd:Simbolo):
         self.tabla[simboloAdd.identificador] = simboloAdd
+
+
 
 
 
@@ -74,8 +83,21 @@ class EntornoTabla:
                 return True
             else:
                 entorno = entorno.padre
-
         return False
+
+
+
+    def sustituirFuncion (self,funcion):
+        entorno = self
+        while entorno is not None:
+            existe = entorno.tablaFunciones.get(funcion.identificador)
+            if existe is not None:
+                entorno.tablaFunciones[funcion.identificador] = funcion
+                return
+            else:
+                entorno = entorno.padre
+
+
 
     def obtenerFuncion(self,identificador) -> Funcion:
         entorno = self
@@ -85,11 +107,14 @@ class EntornoTabla:
                 return simbolo
             else:
                 entorno = entorno.padre
-
         return None
+
+
 
     def agregarFuncion(self,funcionAdd:Funcion):
         self.tablaFunciones[funcionAdd.identificador] = funcionAdd
+
+
 
 
 
@@ -108,8 +133,9 @@ class EntornoTabla:
                 return True
             else:
                 entorno = entorno.padre
-
         return False
+
+
 
     def obtenerClase(self,identificador) -> Clase:
         entorno = self
@@ -119,8 +145,16 @@ class EntornoTabla:
                 return simbolo
             else:
                 entorno = entorno.padre
-
         return None
+
+
 
     def agregarClase(self,claseAgregar:Clase):
         self.tablaClases[claseAgregar.identificador] = claseAgregar
+
+
+
+
+
+
+

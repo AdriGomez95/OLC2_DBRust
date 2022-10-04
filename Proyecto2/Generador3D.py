@@ -5,8 +5,9 @@ class Generador3D:
     def __init__(self):
         self.temporales = 0
         self.etiquetas = 0
-        self.codigo = ''
-        self.main = ''
+        self.codigo = ""
+        self.main = ""
+        self.funciones = ""
 
 
     
@@ -59,6 +60,7 @@ int HP = 0;
     def generarMain(self):
         codigo = self.generarEncabezado()
         codigo += self.codigo +'\n'
+        codigo += self.funciones
         codigo += "int main(){ \n" \
                   f"{self.main} \n" \
                   f"    return 0;" \
@@ -67,9 +69,17 @@ int HP = 0;
 
 
 
+    def agregarFuncion(self,codigo):
+        self.funciones += codigo
+        self.funciones += "\n"
+
+
+
     def reiniciarGenerador(self):
         self.temporales = 0
         self.etiquetas = 0
-        self.codigo = ''
-        self.main = ''
+        self.codigo = ""
+        self.funciones = ""
+        self.main = ""
+
 

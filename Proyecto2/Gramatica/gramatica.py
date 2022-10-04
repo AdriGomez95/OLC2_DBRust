@@ -66,7 +66,6 @@ reservadas = {
     'pow': 'POW',
     'powf': 'POWF',
 
-    #para declarar variables 
     'let': 'LET',
     'mut': 'MUT',
     'vec': 'VEC',
