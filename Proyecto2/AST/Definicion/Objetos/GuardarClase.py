@@ -11,6 +11,8 @@ class GuardarClase(Instruccion):
 
    
     def ejecutar3D(self, entorno):
+        if entorno.existeClase(self.idClase): return ""
+        entorno.agregarClase(Clase(idClase=self.idClase,listaInstrucciones= self.listaInstrucciones))
         pass
 
     def __str__(self):
