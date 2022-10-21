@@ -24,9 +24,9 @@ class CrearInstanciaObjeto(Instruccion):
 
         temp1 = entorno.generador.obtenerTemporal()
         CODIGO_SALIDA = resultadoExpresion.codigo
-        CODIGO_SALIDA += f"{temp1} = SP + {entorno.tamanio};\n"
+        CODIGO_SALIDA += f"    {temp1} = SP + {entorno.tamanio};\n"
         entorno.tamanio += 1
-        CODIGO_SALIDA += f"Stack [ (int) {temp1} ] = {resultadoExpresion.temporal}; \n"
+        CODIGO_SALIDA += f"    Stack[(int){temp1}] = {resultadoExpresion.temporal}; \n"
         CODIGO_SALIDA += "/* FINALIZANDO DECLARACIÓN DE OBJETO */\n"
 
         entorno.agregarSimbolo(instancia)

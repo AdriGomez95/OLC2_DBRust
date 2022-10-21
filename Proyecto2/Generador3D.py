@@ -29,6 +29,7 @@ class Generador3D:
         encabezado = ''
         encabezado += '''
 #include <stdio.h>
+#include <math.h>
 float Stack[10000];
 float Heap[10000];
 int SP = 0;

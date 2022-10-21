@@ -54,7 +54,7 @@ class Declaracion(Instruccion):
         CODIGO_SALIDA += "/* DECLARACIÓN DE UNA VARIABLE */\n"
         CODIGO_SALIDA += valorExpresion.codigo + '\n'
         CODIGO_SALIDA += f'    {temp1} = {PUNTERO_ENTORNO} + {tamanioEntorno}; \n'
-        CODIGO_SALIDA += f'    {SEGMENTO_MEMORIA}[(int) {temp1}] = {valorExpresion.temporal};\n'
+        CODIGO_SALIDA += f'    {SEGMENTO_MEMORIA}[(int){temp1}] = {valorExpresion.temporal};\n'
 
         simbolo = Simbolo()
         simbolo.iniciarSimboloPrimitivo(self.identificador.nombre, None, self.tipo, tamanioEntorno)

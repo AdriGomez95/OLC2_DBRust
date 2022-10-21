@@ -23,8 +23,8 @@ class InstanciaObjeto(Expression):
         temp1 = entorno.generador.obtenerTemporal()
 
         CODIGO_SALIDA += f"/*DECLARACION DE INSTANCIA DE OBJETO*/\n"
-        CODIGO_SALIDA += f"{temp1} = HP; \n"
-        CODIGO_SALIDA += f" HP = HP + {self.tamanioDeClase(clasePlantilla)}; \n"
+        CODIGO_SALIDA += f"    {temp1} = HP; \n"
+        CODIGO_SALIDA += f"    HP = HP + {self.tamanioDeClase(clasePlantilla)}; \n"
 
 
         ENTORNO_INSTANCIA = EntornoTabla(entorno.generador, None)

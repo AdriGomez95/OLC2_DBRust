@@ -21,5 +21,5 @@ class Return_Instr(Instruccion):
 
             temporal = entorno.generador.obtenerTemporal()
             CODIGO_SALIDA += f"    {temporal} = SP + 0; \n"
-            CODIGO_SALIDA += f"    Stack[ (int) {temporal}] = {resultadoExpresion.temporal}; \n"
+            CODIGO_SALIDA += f"    Stack[(int){temporal}] = {resultadoExpresion.temporal}; \n"
             return CODIGO_SALIDA

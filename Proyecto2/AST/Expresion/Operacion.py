@@ -24,6 +24,8 @@ class TIPO_OPERACION(Enum):
     MODULO = 14,
     POW = 15,
     POWF = 16,
+    ABS = 17,
+    SQRT = 18
 
 class Operacion(Expression):
     #1.ENTERO   2.DECIMAL   3.CADENA   4.BOOLEAN   5.VOID   8.NULL   7.&STR(CADENA2)  6.CHAR   9.FN
@@ -107,6 +109,12 @@ class Operacion(Expression):
         
         if self.tipo_operacion == TIPO_OPERACION.SUMA:
                 return self.operacionSuma(entorno)
+        elif self.tipo_operacion == TIPO_OPERACION.RESTA:
+                return self.operacionResta(entorno)
+        elif self.tipo_operacion == TIPO_OPERACION.MULTIPLICACION:
+                return self.operacionMultiplicacion(entorno)
+        elif self.tipo_operacion == TIPO_OPERACION.DIVISION:
+                return self.operacionDivision(entorno)
         elif self.tipo_operacion == TIPO_OPERACION.MAYOR:
                 return self.operacionRelacional(entorno)
         elif self.tipo_operacion == TIPO_OPERACION.MENOR:
@@ -123,10 +131,79 @@ class Operacion(Expression):
                 return self.operacionLogicaAnd(entorno)
         elif self.tipo_operacion ==  TIPO_OPERACION.OR:
                 return self.operacionLogicaOr(entorno)
+        elif self.tipo_operacion ==  TIPO_OPERACION.NOT:
+                return self.operacionLogicaNot(entorno)
+        elif self.tipo_operacion ==  TIPO_OPERACION.MODULO:
+                return self.operacionModulo(entorno)
+        elif self.tipo_operacion ==  TIPO_OPERACION.ABS:
+                return self.operacionAbs(entorno)
+        elif self.tipo_operacion ==  TIPO_OPERACION.SQRT:
+                return self.operacionSqrt(entorno)
 
                 
 
+    def operacionSqrt(self,entorno):
+        CODIGO_SALIDA = ""
+        RETORNO = RetornoType()
 
+        TEMP1 = entorno.generador.obtenerTemporal()
+        izq3D = self.exprIzq.obtener3D(entorno)
+
+        CODIGO_SALIDA += izq3D.codigo +"\n"
+        CODIGO_SALIDA += f"    {TEMP1} = sqrt ({izq3D.temporal});\n"
+
+            
+        RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,TIPO_DATO.ENTERO)
+
+
+
+        return  RETORNO
+
+
+    def operacionAbs(self,entorno):
+        CODIGO_SALIDA = ""
+        RETORNO = RetornoType()
+
+        TEMP1 = entorno.generador.obtenerTemporal()
+        etiquetaVerdadera = entorno.generador.obtenerEtiqueta()
+        etiquetaFalsa = entorno.generador.obtenerEtiqueta()
+        izq3D = self.exprIzq.obtener3D(entorno)
+
+        CODIGO_SALIDA += izq3D.codigo +"\n"
+        CODIGO_SALIDA += f"    if ( {izq3D.temporal} > 1 ) goto {etiquetaVerdadera};\n"
+        CODIGO_SALIDA += f"    goto {etiquetaFalsa}; \n"
+
+        CODIGO_SALIDA += f"{etiquetaVerdadera}: \n    {TEMP1} = {izq3D.temporal}; \n"
+        CODIGO_SALIDA += f"{etiquetaFalsa}: \n    {TEMP1} = {izq3D.temporal} * -1; \n"
+            
+        RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,TIPO_DATO.ENTERO)
+
+        return  RETORNO
+
+    def operacionModulo(self,entorno):
+        CODIGO_SALIDA = ""
+        RETORNO = RetornoType()
+
+        TEMP1 = entorno.generador.obtenerTemporal()
+
+        izq3D = self.exprIzq.obtener3D(entorno)
+        der3D = self.exprDer.obtener3D(entorno)
+
+        tipoDominante = Operacion.PowDominante[izq3D.tipo][der3D.tipo]
+
+        if tipoDominante == TIPO_DATO.ENTERO:
+            CODIGO_SALIDA += izq3D.codigo +"\n"
+            CODIGO_SALIDA += der3D.codigo +"\n"
+            CODIGO_SALIDA += f'    {TEMP1} = {izq3D.temporal} % {der3D.temporal};\n'
+            RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,tipoDominante)
+
+        elif tipoDominante == TIPO_DATO.DECIMAL:
+            CODIGO_SALIDA += izq3D.codigo +"\n"
+            CODIGO_SALIDA += der3D.codigo +"\n"
+            CODIGO_SALIDA += f'    {TEMP1} = {izq3D.temporal} % {der3D.temporal};\n'
+            RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,tipoDominante)
+
+        return  RETORNO
 
     def operacionSuma(self,entorno):
         CODIGO_SALIDA = ""
@@ -164,6 +241,83 @@ class Operacion(Expression):
 
         return  RETORNO
 
+    def operacionResta(self,entorno):
+        CODIGO_SALIDA = ""
+        RETORNO = RetornoType()
+
+        TEMP1 = entorno.generador.obtenerTemporal()
+
+        izq3D = self.exprIzq.obtener3D(entorno)
+        der3D = self.exprDer.obtener3D(entorno)
+
+        tipoDominante = Operacion.restaMultiplicacionDivison[izq3D.tipo][der3D.tipo]
+
+        if tipoDominante == TIPO_DATO.ENTERO:
+            CODIGO_SALIDA += izq3D.codigo +"\n"
+            CODIGO_SALIDA += der3D.codigo +"\n"
+            CODIGO_SALIDA += f'    {TEMP1} = {izq3D.temporal} - {der3D.temporal};\n'
+            RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,tipoDominante)
+
+        elif tipoDominante == TIPO_DATO.DECIMAL:
+            CODIGO_SALIDA += izq3D.codigo +"\n"
+            CODIGO_SALIDA += der3D.codigo +"\n"
+            CODIGO_SALIDA += f'    {TEMP1} = {izq3D.temporal} - {der3D.temporal};\n'
+            RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,tipoDominante)
+
+
+        return  RETORNO
+        
+    def operacionMultiplicacion(self,entorno):
+        CODIGO_SALIDA = ""
+        RETORNO = RetornoType()
+
+        TEMP1 = entorno.generador.obtenerTemporal()
+
+        izq3D = self.exprIzq.obtener3D(entorno)
+        der3D = self.exprDer.obtener3D(entorno)
+
+        tipoDominante = Operacion.restaMultiplicacionDivison[izq3D.tipo][der3D.tipo]
+
+        if tipoDominante == TIPO_DATO.ENTERO:
+            CODIGO_SALIDA += izq3D.codigo +"\n"
+            CODIGO_SALIDA += der3D.codigo +"\n"
+            CODIGO_SALIDA += f'    {TEMP1} = {izq3D.temporal} * {der3D.temporal};\n'
+            RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,tipoDominante)
+
+        elif tipoDominante == TIPO_DATO.DECIMAL:
+            CODIGO_SALIDA += izq3D.codigo +"\n"
+            CODIGO_SALIDA += der3D.codigo +"\n"
+            CODIGO_SALIDA += f'    {TEMP1} = {izq3D.temporal} * {der3D.temporal};\n'
+            RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,tipoDominante)
+
+
+        return  RETORNO
+
+    def operacionDivision(self,entorno):
+        CODIGO_SALIDA = ""
+        RETORNO = RetornoType()
+
+        TEMP1 = entorno.generador.obtenerTemporal()
+
+        izq3D = self.exprIzq.obtener3D(entorno)
+        der3D = self.exprDer.obtener3D(entorno)
+
+        tipoDominante = Operacion.restaMultiplicacionDivison[izq3D.tipo][der3D.tipo]
+
+        if tipoDominante == TIPO_DATO.ENTERO:
+            CODIGO_SALIDA += izq3D.codigo +"\n"
+            CODIGO_SALIDA += der3D.codigo +"\n"
+            CODIGO_SALIDA += f'    {TEMP1} = {izq3D.temporal} / {der3D.temporal};\n'
+            RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,tipoDominante)
+
+        elif tipoDominante == TIPO_DATO.DECIMAL:
+            CODIGO_SALIDA += izq3D.codigo +"\n"
+            CODIGO_SALIDA += der3D.codigo +"\n"
+            CODIGO_SALIDA += f'    {TEMP1} = {izq3D.temporal} / {der3D.temporal};\n'
+            RETORNO.iniciarRetorno(CODIGO_SALIDA,"",TEMP1,tipoDominante)
+
+
+        return  RETORNO
 
     def operacionConcatenar(self,entorno,expresionRetorno):
         CODIGO_SALIDA = ""
@@ -194,7 +348,7 @@ class Operacion(Expression):
         CODIGO_SALIDA += izq3D.codigo
         CODIGO_SALIDA += der3D.codigo
 
-        tipoDominante = Operacion.restaMultiplicacionDivison[izq3D.tipo][der3D.tipo]
+        tipoDominante = Operacion.RelacionalDominante[izq3D.tipo][der3D.tipo]
 
         if tipoDominante == TIPO_DATO.ENTERO or tipoDominante == TIPO_DATO.DECIMAL:
             CODIGO_SALIDA += f'    if ({izq3D.temporal} {self.obtenerSimbolo()} {der3D.temporal}) goto {self.etiquetaVerdadera};\n'
@@ -227,6 +381,8 @@ class Operacion(Expression):
                 return '&&'
         elif self.tipo_operacion == TIPO_OPERACION.OR:
                 return '||'
+        elif self.tipo_operacion == TIPO_OPERACION.NOT:
+                return '!'
 
 
 
@@ -282,6 +438,25 @@ class Operacion(Expression):
 
         return retorno
 
+
+        
+    def operacionLogicaNot(self,entorno):
+        retorno = RetornoType()
+
+        self.exprIzq.etiquetaVerdadera = entorno.generador.obtenerEtiqueta()
+        self.exprIzq.etiquetaFalsa = self.etiquetaFalsa
+
+
+        izquResultado = self.exprIzq.obtener3D(entorno)
+
+        retorno.codigo += izquResultado.codigo
+        retorno.codigo += f"{izquResultado.etiquetaV}: \n"
+
+        retorno.etiquetaV = self.etiquetaFalsa 
+        retorno.etiquetaF = self.etiquetaVerdadera
+        retorno.tipo = TIPO_DATO.BOOLEAN
+
+        return retorno
 
 
 

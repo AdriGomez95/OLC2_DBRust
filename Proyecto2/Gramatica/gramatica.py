@@ -116,6 +116,7 @@ tokens = [
     'MULTIPLICACION',
     'MODULO',
 
+
     'DECIMAL',
     'ENTERO',
     'ID',
@@ -124,6 +125,8 @@ tokens = [
     'STRUCT',
     'TOSTRING',
     'TOOWNED',
+    'SQRTT',
+    'ABSO',
     'VEC2'
 ] + list(reservadas.values())
 
@@ -184,6 +187,16 @@ def t_ENTERO(t):
 def t_VEC2(t):
     r"""vec!"""
     t.type = reservadas.get(t.value.lower(), 'VEC2')
+    return t
+
+def t_SQRT(t):
+    r""".sqrt"""
+    t.type = reservadas.get(t.value.lower(), 'SQRTT')
+    return t
+
+def t_ABSO(t):
+    r""".abs"""
+    t.type = reservadas.get(t.value.lower(), 'ABSO')
     return t
 
 def t_TOOWNED(t):
@@ -754,9 +767,16 @@ def p_expression_aritmetica(t):
 
 
 def p_expression_nativa(t):
-    """expression : expression TOSTRING PIZQ PDER
-                  | expression TOOWNED PIZQ PDER"""
-    t[0] = t[1]
+    """expression : expression ABSO
+                  | expression TOSTRING PIZQ PDER
+                  | expression TOOWNED PIZQ PDER
+                  | expression SQRTT PIZQ """
+    if len(t) == 3:
+        t[0] = Operacion(t[1], TIPO_OPERACION.ABS, [])
+    elif len(t) == 4:
+        t[0] = Operacion(t[1], TIPO_OPERACION.SQRT, [])
+    else:
+        t[0] = t[1]
     #if t.slice[3].type == 'BUFER1':
     #    Nativa(t[1], TIPO_DATO.CADENA, 1)
     #    t[0] = t[1]
